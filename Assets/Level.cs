@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class Level : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public FloorObervser floorObserver { get; private set; }
+    public Transformer transformer { get; private set; }
+    public LevelData data { get; private set; }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    private void Awake() {
+        Debug.Log("Loading room " + RoomLoader.roomName + "...");
+
+        IRoomSerializer roomSerializer = new WebSerializer();
+        data = roomSerializer.LoadLevel("1");
+
+        transformer = new Transformer(transform);
+        floorObserver = new FloorObervser(this);
+
+
     }
+    
 }
