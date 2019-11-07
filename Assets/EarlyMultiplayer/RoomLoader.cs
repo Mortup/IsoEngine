@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class RoomLoader : MonoBehaviour
 {
-    public static string roomName = "MortupHouse";
+    public static string roomName = "TheHouseOfMortup";
 
     public InputField inputField;
 

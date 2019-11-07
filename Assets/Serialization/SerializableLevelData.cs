@@ -18,23 +18,19 @@ public class SerializableLevelData
         floorTiles = new int[width * height];
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                floorTiles[y * width + x] = levelData.floorTiles[x, y];
+                floorTiles[y * width + x] = levelData.GetFloor(x, y);
             }
         }
     }
 
     public LevelData ToLevelData() {
-        LevelData levelData = new LevelData();
+        LevelData levelData = new LevelData(width, height);
         levelData.name = name;
         levelData.owner = owner;
-        levelData.width = width;
-        levelData.height = height;
-
-        levelData.floorTiles = new int[width, height];
 
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                levelData.floorTiles[x, y] = floorTiles[y * width + x];
+                levelData.SetFloor(x, y, floorTiles[y * width + x]);
             }
         }
 

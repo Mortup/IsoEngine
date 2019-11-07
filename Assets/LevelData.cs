@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using System.Collections.Generic;
 
 public class LevelData
 {
@@ -7,13 +6,34 @@ public class LevelData
     public string owner;
     public int width;
     public int height;
-    public int[,] floorTiles;
-    
-    public LevelData() {
+
+    private int[,] floorTiles;
+
+    private List<FloorObserver> floorObservers;
+
+    public LevelData(int width, int height) {
         name = "Default Level";
         owner = "Gonzalito del Flow";
-        width = 4;
-        height = 3;
-        floorTiles = new int[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
+        this.width = width;
+        this.height = height;
+        floorTiles = new int[width, height];
+
+        floorObservers = new List<FloorObserver>();
+    }
+
+    public int GetFloor(int x, int y) {
+        return floorTiles[x, y];
+    }
+
+    public void SetFloor(int x, int y, int value) {
+        floorTiles[x, y] = value;
+
+        foreach (FloorObserver observer in floorObservers) {
+            observer.UpdateTile(x, y);
+        }
+    }
+
+    public void RegisterFloorObserver(FloorObserver observer) {
+        floorObservers.Add(observer);
     }
 }

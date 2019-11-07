@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FloorObervser
+public class FloorObserver
 {
     private Level level;
     private GameObject[,] gameobjects;
     private SpriteRenderer[,] spriterenderers;
 
-    public FloorObervser(Level level) {
+    public FloorObserver(Level level) {
         this.level = level;
 
         gameobjects = new GameObject[level.data.width, level.data.height];
@@ -30,6 +30,8 @@ public class FloorObervser
         }
 
         UpdateAllTiles();
+
+        level.data.RegisterFloorObserver(this);
     }
 
     public int SortingOrder(int x, int y) {
@@ -47,8 +49,8 @@ public class FloorObervser
 
     }
 
-    private void UpdateTile(int x, int y) {
-        int tileIndex = level.data.floorTiles[x, y];
+    public void UpdateTile(int x, int y) {
+        int tileIndex = level.data.GetFloor(x, y);
         spriterenderers[x, y].sprite = Resources.Load<Sprite>("Sprites/Floor/" + tileIndex);
     }
 

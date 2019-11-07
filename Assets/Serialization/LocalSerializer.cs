@@ -9,10 +9,17 @@ public class LocalSerializer : IRoomSerializer {
     LevelData IRoomSerializer.LoadLevel(string levelName) {
         if (FileExists(levelName) == false) {
             UnityEngine.Debug.Log(string.Format("Level {0} could not be found. Creating a default one.", levelName));
-            return new LevelData();
+            LevelData levelData = new LevelData(5,5);
+            levelData.name = levelName;
+
+            return levelData;
         }
 
-        throw new System.NotImplementedException();
+        FileStream saveFile = File.Open(FullSavePath(levelName), FileMode.Open);
+        BinaryFormatter formatter = new BinaryFormatter();
+        SerializableLevelData serializableData = (SerializableLevelData)formatter.Deserialize(saveFile);
+
+        return serializableData.ToLevelData();
     }
 
     void IRoomSerializer.SaveLevel(LevelData levelData) {
@@ -22,6 +29,7 @@ public class LocalSerializer : IRoomSerializer {
 
         if (!Directory.Exists(basePath)) {
             Directory.CreateDirectory(basePath);
+            UnityEngine.Debug.Log("Creating saving directory...");
         }
 
         FileStream saveFile = File.Create(FullSavePath(levelData.name));
