@@ -1,13 +1,27 @@
 ﻿using System;
 
 [Serializable]
-public class WebLevelData
+public class SerializableLevelData
 {
     public string name;
     public string owner;
     public int width;
     public int height;
     public int[] floorTiles;
+
+    public SerializableLevelData(LevelData levelData) {
+        name = levelData.name;
+        owner = levelData.owner;
+        width = levelData.width;
+        height = levelData.height;
+
+        floorTiles = new int[width * height];
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                floorTiles[y * width + x] = levelData.floorTiles[x, y];
+            }
+        }
+    }
 
     public LevelData ToLevelData() {
         LevelData levelData = new LevelData();
@@ -23,7 +37,6 @@ public class WebLevelData
                 levelData.floorTiles[x, y] = floorTiles[y * width + x];
             }
         }
-
 
         return levelData;
     }

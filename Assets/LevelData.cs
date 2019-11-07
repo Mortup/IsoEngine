@@ -12,8 +12,8 @@ public class LevelData
     public LevelData() {
         name = "Default Level";
         owner = "Gonzalito del Flow";
-        width = 3;
-        height = 4;
+        width = 4;
+        height = 3;
         floorTiles = new int[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
     }
 }

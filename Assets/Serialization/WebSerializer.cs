@@ -11,9 +11,13 @@ public class WebSerializer : IRoomSerializer {
         HttpWebResponse response = (HttpWebResponse)request.GetResponse();
         StreamReader reader = new StreamReader(response.GetResponseStream());
         string jsonResponse = reader.ReadToEnd();
-        WebLevelData webLevelData = JsonUtility.FromJson<WebLevelData>(jsonResponse);
+        SerializableLevelData webLevelData = JsonUtility.FromJson<SerializableLevelData>(jsonResponse);
         LevelData levelData = webLevelData.ToLevelData();
 
         return levelData;
+    }
+
+    void IRoomSerializer.SaveLevel(LevelData levelData) {
+        throw new System.NotImplementedException();
     }
 }
