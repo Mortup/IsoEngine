@@ -3,6 +3,7 @@
 [Serializable]
 public class SerializableLevelData
 {
+    public int id;
     public string name;
     public string owner;
     public int width;
@@ -10,6 +11,7 @@ public class SerializableLevelData
     public int[] floorTiles;
 
     public SerializableLevelData(LevelData levelData) {
+        id = levelData.id;
         name = levelData.name;
         owner = levelData.owner;
         width = levelData.width;
@@ -27,6 +29,7 @@ public class SerializableLevelData
         LevelData levelData = new LevelData(width, height);
         levelData.name = name;
         levelData.owner = owner;
+        levelData.id = id;
 
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {

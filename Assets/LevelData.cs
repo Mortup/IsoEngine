@@ -2,6 +2,7 @@
 
 public class LevelData
 {
+    public int id;
     public string name;
     public string owner;
     public int width;
@@ -12,6 +13,7 @@ public class LevelData
     private List<FloorObserver> floorObservers;
 
     public LevelData(int width, int height) {
+        id = -1;
         name = "Default Level";
         owner = "Gonzalito del Flow";
         this.width = width;
