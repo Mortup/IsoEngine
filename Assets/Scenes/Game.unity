@@ -149,7 +149,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 490a7a62d37f3a04c9faf2ef7c14e647, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fakeStart: 0
   playerPrefab: {fileID: 3960670399697994742, guid: 0a59e9a6ac24e3c46b094cc9d2b29670,
     type: 3}
 --- !u!4 &341870752
@@ -508,8 +507,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 5, y: -2.5}
+  m_SizeDelta: {x: -10, y: -5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1713078137
 MonoBehaviour:
@@ -524,6 +523,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: {fileID: 1783360209}
+  showNickname: 1
   showMouseScreen: 0
   showMouseWorld: 0
   showMouseLocal: 0
@@ -612,7 +612,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abd12767a61fc4343b6e88cb82dec187, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadFromWeb: 0
+  loadFromWeb: 1
 --- !u!4 &1783360210
 Transform:
   m_ObjectHideFlags: 0

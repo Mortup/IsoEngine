@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class FloorEditor : MonoBehaviour
 {
@@ -8,7 +6,6 @@ public class FloorEditor : MonoBehaviour
 
     private void Update() {
         if (Input.GetMouseButtonDown(0)) {
-            Debug.Log("Changing");
             Vector2Int coords = level.transformer.ScreenToTile(Input.mousePosition);
             level.data.SetFloor(coords.x, coords.y, 1);
         }

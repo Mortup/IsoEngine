@@ -13,7 +13,7 @@ namespace com.mortup.city {
 
         [SerializeField] private InputField passwordField;
 
-        const string playerEmailKey = "PlayerEmail";
+        public const string playerEmailKey = "PlayerEmail";
         private InputField inputField;
 
         private void Awake() {

@@ -7,6 +7,8 @@ using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 
+using com.mortup.city.persistence;
+
 namespace com.mortup.city {
 
     public class Launcher : MonoBehaviourPunCallbacks {
@@ -41,6 +43,7 @@ namespace com.mortup.city {
 
         public override void OnConnectedToMaster() {
             progressLabel.text = "Successfully connected to server";
+            Debug.LogFormat("Welcome back {0}!", PhotonNetwork.NickName);
 
             SceneManager.LoadScene("Game");
         }
@@ -50,8 +53,13 @@ namespace com.mortup.city {
             Debug.LogWarningFormat("OnDisconnected() with reason {0}", cause);
         }
 
+        public override void OnCustomAuthenticationResponse(Dictionary<string, object> data) {
+            PersistentAPI.SetToken((string)data["token"]);
+        }
+
         public override void OnCustomAuthenticationFailed(string debugMessage) {
             progressLabel.text = "Wrong email or password.";
+            //TODO: Might also be that the server couldn't be reached.
         }
     }
 

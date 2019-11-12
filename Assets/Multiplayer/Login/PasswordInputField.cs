@@ -13,6 +13,12 @@ namespace com.mortup.city {
             inputField = GetComponent<InputField>();
         }
 
+        private void Start() {
+            if (PlayerPrefs.HasKey(PlayerEmailInputField.playerEmailKey)) {
+                inputField.ActivateInputField();
+            }
+        }
+
         private void Update() {
             if (wasFocused && Input.GetKeyDown(KeyCode.Return)) {
                 launcher.Connect();

@@ -1,11 +1,14 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+using Photon.Pun;
+
 public class DebugLogger : MonoBehaviour
 {
     [SerializeField] private Level level;
 
     [Header("Options")]
+    [SerializeField] private bool showNickname;
     [SerializeField] private bool showMouseScreen;
     [SerializeField] private bool showMouseWorld;
     [SerializeField] private bool showMouseLocal;
@@ -20,6 +23,10 @@ public class DebugLogger : MonoBehaviour
     private void OnGUI() {
 
         string output = "";
+
+        if (showNickname) {
+            output += string.Format("Welcome back, {0}!\n", PhotonNetwork.NickName);
+        }
 
         if (showMouseScreen) {
             output += string.Format("Mouse Screen: {0}, {1}\n", Input.mousePosition.x, Input.mousePosition.y);

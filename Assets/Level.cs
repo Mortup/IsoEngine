@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using com.mortup.city.serialization;
+
 public class Level : MonoBehaviour
 {
     [Header("Debug Settings")]
@@ -15,6 +17,7 @@ public class Level : MonoBehaviour
 
     private void Awake() {
         Debug.Log("Loading room " + RoomLoader.roomName + "...");
+        transformer = new Transformer(transform);
 
         if (loadFromWeb) {
             roomSerializer = new WebSerializer();
@@ -25,7 +28,6 @@ public class Level : MonoBehaviour
 
         data = roomSerializer.LoadLevel(RoomLoader.roomName);
 
-        transformer = new Transformer(transform);
         floorObserver = new FloorObserver(this);
 
 

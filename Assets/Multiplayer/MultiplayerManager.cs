@@ -6,7 +6,6 @@ using ExitGames.Client.Photon;
 
 public class MultiplayerManager : MonoBehaviourPunCallbacks
 {
-    [SerializeField] private bool fakeStart;
     [SerializeField] private GameObject playerPrefab;
 
     private CharacterMovement localPlayer;
@@ -14,18 +13,7 @@ public class MultiplayerManager : MonoBehaviourPunCallbacks
     private readonly byte RequestPlayerPosition = 1;
 
     private void Start() {
-        if (fakeStart) {
-            PhotonNetwork.ConnectUsingSettings();
-        }
-        else {
-            JoinRoom();
-        }
-    }
-
-    public override void OnConnectedToMaster() {
-        if (fakeStart) {
-            JoinRoom();
-        }
+        JoinRoom();
     }
 
     public override void OnJoinedRoom() {
