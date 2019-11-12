@@ -2,16 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterMovement : MonoBehaviour
-{
-    [SerializeField] private Level level;
+using Photon.Pun;
+using Photon.Realtime;
 
+public class CharacterMovement : MonoBehaviourPun, IPunObservable
+{
     [SerializeField] private float speed;
 
+    private Level level;
     private Vector2 target;
 
     private void Start() {
-        target = transform.position;
+        level = FindObjectOfType<Level>();
+
+        if (photonView.IsMine == true || PhotonNetwork.IsConnected == false) {
+            target = transform.position;
+        }
     }
 
     private void Update() {
@@ -20,9 +26,33 @@ public class CharacterMovement : MonoBehaviour
             transform.position = transform.position + (Vector3)(target - (Vector2)transform.position).normalized * Time.deltaTime * speed;
         }
 
+        if (PhotonNetwork.IsConnected == true && photonView.IsMine == false)
+            return;
+
+        // Input handling.
         if (Input.GetMouseButtonDown(0)) {
             Vector2Int targetTile = level.transformer.ScreenToTile(Input.mousePosition);
             target = level.transformer.TileToWorld(targetTile);
+        }
+    }
+
+    public void RequestPosition(Player requester) {
+        Debug.LogFormat("Requesting position. Sending {0}", (Vector2)transform.position);
+        photonView.RPC("SetPosition", requester, (Vector2)transform.position);
+    }
+
+    [PunRPC]
+    private void SetPosition(Vector2 position) {
+        Debug.LogFormat("Received position {0}", position);
+        transform.position = position;
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+        if (stream.IsWriting) {
+            stream.SendNext(target);
+        }
+        else {
+            target = (Vector2)stream.ReceiveNext();
         }
     }
 }
