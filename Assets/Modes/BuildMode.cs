@@ -8,6 +8,7 @@ using com.mortup.city.world.commands;
 namespace com.mortup.city.gamemodes {
 
     public class BuildMode : GameMode {
+        [SerializeField] private Level level;
         [SerializeField] private GameObject cursorPrefab;
 
         GameObject cursorContainer;
@@ -44,10 +45,10 @@ namespace com.mortup.city.gamemodes {
 
         private void Update() {
             DeleteCursors();
-            Vector2Int mouseCoords = Level.main.transformer.ScreenToTile(Input.mousePosition);
+            Vector2Int mouseCoords = level.transformer.ScreenToTile(Input.mousePosition);
 
             if (!isDragging) {
-                dragStartCoords = Level.main.transformer.ScreenToTile(Input.mousePosition);
+                dragStartCoords = level.transformer.ScreenToTile(Input.mousePosition);
             }
 
             if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject()) {
@@ -66,13 +67,13 @@ namespace com.mortup.city.gamemodes {
             int yMax = Mathf.Max(dragStartCoords.y, mouseCoords.y);
             for (int x = xMin; x <= xMax; x++) {
                 for (int y = yMin; y <= yMax; y++) {
-                    GameObject c = SimplePool.Spawn(cursorPrefab, Level.main.transformer.TileToWorld(x, y), Quaternion.identity);
+                    GameObject c = SimplePool.Spawn(cursorPrefab, level.transformer.TileToWorld(x, y), Quaternion.identity);
                     c.transform.SetParent(cursorContainer.transform, true);
                     cursors.Add(c);
 
                     SpriteRenderer spriteRenderer = c.GetComponent<SpriteRenderer>();
                     spriteRenderer.sprite = GetCursorSprite(new Vector2Int(x,y));
-                    spriteRenderer.sortingOrder = Level.main.floorObserver.SortingOrder(x, y) + 1;
+                    spriteRenderer.sortingOrder = level.floorObserver.SortingOrder(x, y) + 1;
                     spriteRenderer.sortingLayerName = "Floor";
                 }
             }
@@ -81,21 +82,21 @@ namespace com.mortup.city.gamemodes {
 
         protected virtual IWorldCommand GetCommand(Vector2Int start, Vector2Int end) {
             if (Input.GetButton("Remove")) {
-                return new RemoveFloorWorldCommand(Level.main, start, end);
+                return new RemoveFloorWorldCommand(level, start, end);
             }
             else {
-                return new BuildFloorWorldCommand(Level.main, start, end);
+                return new BuildFloorWorldCommand(level, start, end);
             }
         }
 
         public virtual Sprite GetCursorSprite(Vector2Int position) {
-            if (Level.main.data.IsFloorInBounds(position) == false)
+            if (level.data.IsFloorInBounds(position) == false)
                 return null;
 
             if (Input.GetButton("Remove"))
                 return removeSprite;
 
-            if (Level.main.data.GetFloor(position.x, position.y) != (int)FloorIndex.Empty)
+            if (level.data.GetFloor(position.x, position.y) != (int)FloorIndex.Empty)
                 return null;
 
             return regularSprite;

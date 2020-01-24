@@ -6,8 +6,6 @@ using com.mortup.iso.serialization;
 
 public class Level : MonoBehaviour
 {
-    public static Level main { get; private set; } // TODO: Delete this
-
     public FloorObserver floorObserver { get; private set; }
     public Transformer transformer { get; private set; }
     public LevelData data { get; private set; }
@@ -25,14 +23,6 @@ public class Level : MonoBehaviour
         data = roomSerializer.LoadLevel("2");
 
         floorObserver = new FloorObserver(this);
-
-
-        if (main == null) {
-            main = this;
-        }
-        else {
-            Debug.LogError("Multiple levels, should do something about it.");
-        }
     }
 
 
