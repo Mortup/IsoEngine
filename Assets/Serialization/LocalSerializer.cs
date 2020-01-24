@@ -4,12 +4,12 @@ using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
 namespace com.mortup.iso.serialization {
-    public class LocalSerializer : MonoBehaviour, IRoomSerializer {
+    public class LocalSerializer : MonoBehaviour, ILevelSerializer {
 
-        private const string basePath = "Saves";
+        private const string basePath = "Saves";    // TODO: Path Manager should take care of this. Saves sholud be on resources.
         private const string fileExtension = ".bin";
 
-        LevelData IRoomSerializer.LoadLevel(string levelName) {
+        LevelData ILevelSerializer.LoadLevel(string levelName) {
             if (FileExists(levelName) == false) {
                 Debug.LogError(string.Format("Level {0} could not be found. Creating a default one.", levelName));
                 LevelData levelData = new LevelData(10, 10);
@@ -18,14 +18,14 @@ namespace com.mortup.iso.serialization {
                 return levelData;
             }
 
-            FileStream saveFile = File.Open(FullSavePath(levelName), FileMode.Open);
+            FileStream saveFile = File.Open(FullSavePath(levelName), FileMode.Open);// TODO: Saves should be on resources.
             BinaryFormatter formatter = new BinaryFormatter();
             SerializableLevelData serializableData = (SerializableLevelData)formatter.Deserialize(saveFile);
 
             return serializableData.ToLevelData();
         }
 
-        void IRoomSerializer.SaveLevel(LevelData levelData) {
+        void ILevelSerializer.SaveLevel(LevelData levelData) {
             Debug.Log("Saving level " + levelData.name + "...");
 
             SerializableLevelData serializableData = new SerializableLevelData(levelData);
@@ -41,6 +41,7 @@ namespace com.mortup.iso.serialization {
             saveFile.Close();
         }
 
+        // TODO: Duplicated methods on localserializer and tiledserializer. Evaluate merge.
         private bool FileExists(string fileName) {
             return File.Exists(FullSavePath(fileName));
         }

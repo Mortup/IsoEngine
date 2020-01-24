@@ -4,9 +4,9 @@ using com.mortup.iso.persistence;
 
 namespace com.mortup.iso.serialization {
 
-    public class WebSerializer : MonoBehaviour, IRoomSerializer {
+    public class WebSerializer : MonoBehaviour, ILevelSerializer {
 
-        LevelData IRoomSerializer.LoadLevel(string levelName) {
+        LevelData ILevelSerializer.LoadLevel(string levelName) {
             string jsonResponse = PersistentAPI.GetRoom(levelName);
     
             SerializableLevelData webLevelData = JsonUtility.FromJson<SerializableLevelData>(jsonResponse);
@@ -15,7 +15,7 @@ namespace com.mortup.iso.serialization {
             return levelData;
         }
 
-        void IRoomSerializer.SaveLevel(LevelData levelData) {
+        void ILevelSerializer.SaveLevel(LevelData levelData) {
             SerializableLevelData webLevelData = new SerializableLevelData(levelData);
             PersistentAPI.SaveRoom(webLevelData);
             Debug.Log("Saving room");

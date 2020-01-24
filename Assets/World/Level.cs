@@ -10,17 +10,20 @@ public class Level : MonoBehaviour
     public Transformer transformer { get; private set; }
     public LevelData data { get; private set; }
 
-    private IRoomSerializer roomSerializer;
+    [Header("Debug Settings")]
+    [SerializeField] private string levelName;
+
+    private ILevelSerializer levelSerializer;
 
     private void Awake() {
         transformer = new Transformer(transform);
 
-        roomSerializer = GetComponent<IRoomSerializer>();
-        if (roomSerializer == null) {
-            roomSerializer = gameObject.AddComponent<NullRoomSerializer>();
+        levelSerializer = GetComponent<ILevelSerializer>();
+        if (levelSerializer == null) {
+            levelSerializer = gameObject.AddComponent<NullRoomSerializer>();
         }
 
-        data = roomSerializer.LoadLevel("2");
+        data = levelSerializer.LoadLevel(levelName);
 
         floorObserver = new FloorObserver(this);
     }
@@ -28,7 +31,7 @@ public class Level : MonoBehaviour
 
     private void Update() {
         if (Input.GetKeyDown(KeyCode.S)) {
-            roomSerializer.SaveLevel(data);
+            levelSerializer.SaveLevel(data);
         }
     }
 

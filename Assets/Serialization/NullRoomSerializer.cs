@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 namespace com.mortup.iso.serialization {
-    public class NullRoomSerializer : MonoBehaviour, IRoomSerializer {
+    public class NullRoomSerializer : MonoBehaviour, ILevelSerializer {
 
         public LevelData LoadLevel(string levelName) {
             return new LevelData(10, 10);

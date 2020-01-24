@@ -2337,6 +2337,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abd12767a61fc4343b6e88cb82dec187, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelName: IsoTiledTest
 --- !u!4 &1783360210
 Transform:
   m_ObjectHideFlags: 0
@@ -2360,7 +2361,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1783360208}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4cc44ad8cb475fa4eb3176e39c8ed963, type: 3}
+  m_Script: {fileID: 11500000, guid: 2134035c431ae4246858e88954cacafe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1834592235
