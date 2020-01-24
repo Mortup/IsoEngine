@@ -1,6 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.EventSystems;
 
 using Photon.Pun;
 using Photon.Realtime;
@@ -21,7 +20,6 @@ public class CharacterMovement : MonoBehaviourPun, IPunObservable
     }
 
     private void Update() {
-        
         if ((target - (Vector2)transform.position).magnitude > 0.05f) {
             transform.position = transform.position + (Vector3)(target - (Vector2)transform.position).normalized * Time.deltaTime * speed;
         }
@@ -30,6 +28,10 @@ public class CharacterMovement : MonoBehaviourPun, IPunObservable
             return;
 
         // Input handling.
+        // Don't move if clicking on UI elements.
+        if (EventSystem.current.IsPointerOverGameObject())
+            return;
+
         if (Input.GetMouseButtonDown(0)) {
             Vector2Int targetTile = level.transformer.ScreenToTile(Input.mousePosition);
             target = level.transformer.TileToWorld(targetTile);

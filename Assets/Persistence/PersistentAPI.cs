@@ -2,13 +2,14 @@
 using System.Net;
 
 using UnityEngine;
+using com.mortup.iso.serialization;
 
-namespace com.mortup.city.persistence {
+namespace com.mortup.iso.persistence {
 
     public class PersistentAPI {
         public static readonly string baseUrl = "http://ec2-54-244-217-50.us-west-2.compute.amazonaws.com:8000/api/";
 
-        private static string authToken = "";
+        private static string authToken = "NOTOKEN";
 
         public static void SetToken(string token) {
             authToken = "Token " + token;

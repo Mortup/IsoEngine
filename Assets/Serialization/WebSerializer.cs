@@ -1,12 +1,10 @@
-﻿using System.IO;
+﻿using UnityEngine;
 
-using UnityEngine;
+using com.mortup.iso.persistence;
 
-using com.mortup.city.persistence;
+namespace com.mortup.iso.serialization {
 
-namespace com.mortup.city.serialization {
-
-    public class WebSerializer : IRoomSerializer {
+    public class WebSerializer : MonoBehaviour, IRoomSerializer {
 
         LevelData IRoomSerializer.LoadLevel(string levelName) {
             string jsonResponse = PersistentAPI.GetRoom(levelName);
