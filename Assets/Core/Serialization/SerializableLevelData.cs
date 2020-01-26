@@ -1,5 +1,7 @@
 ﻿using System;
 
+using com.mortup.iso.world;
+
 namespace com.mortup.iso.serialization {
 
     [Serializable]

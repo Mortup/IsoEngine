@@ -1,6 +1,8 @@
 ﻿using System.IO;
 using UnityEngine;
 
+using com.mortup.iso.world;
+
 namespace com.mortup.iso.serialization.tiled {
 
     public class TiledSerializer : MonoBehaviour, ILevelSerializer {

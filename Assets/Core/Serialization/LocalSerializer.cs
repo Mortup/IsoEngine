@@ -3,6 +3,8 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 using UnityEngine;
 
+using com.mortup.iso.world;
+
 namespace com.mortup.iso.serialization {
     public class LocalSerializer : MonoBehaviour, ILevelSerializer {
 
@@ -41,7 +43,6 @@ namespace com.mortup.iso.serialization {
             saveFile.Close();
         }
 
-        // TODO: Duplicated methods on localserializer and tiledserializer. Evaluate merge.
         private bool FileExists(string fileName) {
             return File.Exists(FullSavePath(fileName));
         }

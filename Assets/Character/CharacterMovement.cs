@@ -4,6 +4,8 @@ using UnityEngine.EventSystems;
 using Photon.Pun;
 using Photon.Realtime;
 
+using com.mortup.iso;
+
 public class CharacterMovement : MonoBehaviourPun, IPunObservable
 {
     [SerializeField] private float speed;

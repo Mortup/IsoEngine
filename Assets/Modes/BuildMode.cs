@@ -2,8 +2,9 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-using com.mortup.city.world;
-using com.mortup.city.world.commands;
+using com.mortup.iso;
+using com.mortup.iso.world;
+using com.mortup.iso.world.commands;
 
 namespace com.mortup.city.gamemodes {
 
@@ -82,10 +83,10 @@ namespace com.mortup.city.gamemodes {
 
         protected virtual IWorldCommand GetCommand(Vector2Int start, Vector2Int end) {
             if (Input.GetButton("Remove")) {
-                return new RemoveFloorWorldCommand(level, start, end);
+                return new RemoveFloorAreaCommand(level, start, end);
             }
             else {
-                return new BuildFloorWorldCommand(level, start, end);
+                return new BuildFloorAreaCommand(level, start, end);
             }
         }
 

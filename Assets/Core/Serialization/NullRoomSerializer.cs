@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 
+using com.mortup.iso.world;
+
 namespace com.mortup.iso.serialization {
     public class NullRoomSerializer : MonoBehaviour, ILevelSerializer {
 

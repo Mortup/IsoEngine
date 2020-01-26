@@ -1,4 +1,4 @@
-﻿namespace com.mortup.city.world {
+﻿namespace com.mortup.iso.world {
 
     public enum FloorIndex {
         Empty = 0,

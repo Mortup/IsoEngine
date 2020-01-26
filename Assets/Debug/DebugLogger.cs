@@ -3,6 +3,8 @@ using UnityEngine.UI;
 
 using Photon.Pun;
 
+using com.mortup.iso;
+
 public class DebugLogger : MonoBehaviour
 {
     [SerializeField] private Level level;
