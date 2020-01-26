@@ -79,6 +79,9 @@ namespace com.mortup.city.gamemodes {
                 }
             }
 
+            if (Input.GetButtonDown("Undo")) {
+                commandStack.Pop().Excecute();
+            }
         }
 
         protected virtual IWorldCommand GetCommand(Vector2Int start, Vector2Int end) {
