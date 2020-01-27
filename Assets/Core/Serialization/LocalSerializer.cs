@@ -8,7 +8,7 @@ using com.mortup.iso.world;
 namespace com.mortup.iso.serialization {
     public class LocalSerializer : MonoBehaviour, ILevelSerializer {
 
-        private const string basePath = "Saves";    // TODO: Path Manager should take care of this. Saves sholud be on resources.
+        private const string basePath = "Saves";    // TODO: Path Manager should take care of this.
         private const string fileExtension = ".bin";
 
         LevelData ILevelSerializer.LoadLevel(string levelName) {
@@ -20,7 +20,7 @@ namespace com.mortup.iso.serialization {
                 return levelData;
             }
 
-            FileStream saveFile = File.Open(FullSavePath(levelName), FileMode.Open);// TODO: Saves should be on resources.
+            FileStream saveFile = File.Open(FullSavePath(levelName), FileMode.Open);
             BinaryFormatter formatter = new BinaryFormatter();
             SerializableLevelData serializableData = (SerializableLevelData)formatter.Deserialize(saveFile);
 
