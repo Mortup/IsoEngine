@@ -53,9 +53,13 @@ namespace com.mortup.iso.observers {
         public void UpdateTile(int x, int y) {
             int tileIndex = level.data.GetFloor(x, y);
             spriterenderers[x, y].sprite = Resources.Load<Sprite>("Sprites/Floor/" + tileIndex);
+            spriterenderers[x,y].sortingOrder = SortingOrder(x, y);
+            gameobjects[x,y].transform.localPosition = level.transformer.TileToLocal(x, y);
         }
 
-
+        public void NotifyOrientationChanged() {
+            UpdateAllTiles(); // TODO: Replace this for only a position update.
+        }
 
     }
 

@@ -52,4 +52,11 @@ public class DebugLogger : MonoBehaviour
 
         text.text = output;
     }
+
+    private void Update() {
+        if (Input.GetKeyDown(KeyCode.R)) {
+            Debug.Log("Rotating from DebugLogger");
+            level.transformer.RotateClockwise();
+        }
+    }
 }

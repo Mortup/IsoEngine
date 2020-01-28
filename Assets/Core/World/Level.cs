@@ -17,7 +17,7 @@ namespace com.mortup.iso {
         private ILevelSerializer levelSerializer;
 
         private void Awake() {
-            transformer = new Transformer(transform);
+            transformer = new Transformer(this);
 
             levelSerializer = GetComponent<ILevelSerializer>();
             if (levelSerializer == null) {
