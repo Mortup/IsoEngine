@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 
+using com.mortup.iso.world;
+
 namespace com.mortup.iso {
 
     public class Transformer {
@@ -77,7 +79,12 @@ namespace com.mortup.iso {
             orientation = newOrientation;
 
             if (oldOrientation != orientation) {
-                level.floorObserver.NotifyOrientationChanged();
+                IsometricTransform[] transforms = GameObject.FindObjectsOfType<IsometricTransform>();
+                foreach (IsometricTransform t in transforms) {
+                    if (t.GetLevel() == level) {
+                        t.UpdatePosition();
+                    }
+                }
             }
         }
 

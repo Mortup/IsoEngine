@@ -56,10 +56,6 @@ namespace com.mortup.iso.observers {
             isometricTransforms[x, y].UpdatePosition();
         }
 
-        public void NotifyOrientationChanged() {
-            UpdateAllTiles(); // TODO: Replace this for only a position update.
-        }
-
     }
 
 }

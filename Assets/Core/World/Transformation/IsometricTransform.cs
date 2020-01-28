@@ -21,6 +21,10 @@ namespace com.mortup.iso.world {
             this.level = level;
         }
 
+        public Level GetLevel() {
+            return level;
+        }
+
         public void UpdatePosition() {
             transform.position = level.transformer.TileToWorld(coords);
 
