@@ -1,6 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+
+using com.mortup.iso.world;
 
 namespace com.mortup.iso.observers {
 
@@ -8,25 +8,31 @@ namespace com.mortup.iso.observers {
         private Level level;
         private GameObject[,] gameobjects;
         private SpriteRenderer[,] spriterenderers;
+        private IsometricTransform[,] isometricTransforms;
 
         public FloorObserver(Level level) {
             this.level = level;
 
             gameobjects = new GameObject[level.data.width, level.data.height];
             spriterenderers = new SpriteRenderer[level.data.width, level.data.height];
+            isometricTransforms = new IsometricTransform[level.data.width, level.data.height];
 
             for (int x = 0; x < level.data.width; x++) {
                 for (int y = 0; y < level.data.height; y++) {
                     GameObject go = new GameObject(string.Format("Floor Tile [{0}, {1}]", x, y));
                     go.transform.SetParent(level.transform);
-                    go.transform.localPosition = level.transformer.TileToLocal(x, y);
 
                     SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
                     sr.sortingLayerName = "Floor";
                     sr.sortingOrder = SortingOrder(x, y);
 
+                    IsometricTransform isoTrans = go.AddComponent<IsometricTransform>();
+                    isoTrans.Init(level);
+                    isoTrans.coords = new Vector2Int(x, y);
+
                     gameobjects[x, y] = go;
                     spriterenderers[x, y] = sr;
+                    isometricTransforms[x, y] = isoTrans;
                 }
             }
 
@@ -54,7 +60,7 @@ namespace com.mortup.iso.observers {
             int tileIndex = level.data.GetFloor(x, y);
             spriterenderers[x, y].sprite = Resources.Load<Sprite>("Sprites/Floor/" + tileIndex);
             spriterenderers[x,y].sortingOrder = SortingOrder(x, y);
-            gameobjects[x,y].transform.localPosition = level.transformer.TileToLocal(x, y);
+            isometricTransforms[x, y].UpdatePosition();
         }
 
         public void NotifyOrientationChanged() {
