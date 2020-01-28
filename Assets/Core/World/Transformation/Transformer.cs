@@ -58,6 +58,12 @@ namespace com.mortup.iso {
             return TileToWorld(ScreenToTile(Input.mousePosition));
         }
 
+        // Sorting Order
+        public int SortingOrder(int x, int y) {
+            Vector2 localPos = level.transformer.TileToLocal(x, y);
+            return Mathf.RoundToInt(localPos.y * 1000 + localPos.x * 10) * -1;
+        }
+
         // Rotation Specific
         public enum Orientation {
             NORTH = 0,

@@ -24,7 +24,6 @@ namespace com.mortup.iso.observers {
 
                     SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
                     sr.sortingLayerName = "Floor";
-                    sr.sortingOrder = SortingOrder(x, y);
 
                     IsometricTransform isoTrans = go.AddComponent<IsometricTransform>();
                     isoTrans.Init(level);
@@ -41,11 +40,6 @@ namespace com.mortup.iso.observers {
             level.data.RegisterFloorObserver(this);
         }
 
-        public int SortingOrder(int x, int y) {
-            Vector2 localPos = level.transformer.TileToLocal(x, y);
-            return Mathf.RoundToInt(localPos.y * 1000 + localPos.x * 10) * -1;
-        }
-
         private void UpdateAllTiles() {
 
             for (int x = 0; x < level.data.width; x++) {
@@ -59,7 +53,6 @@ namespace com.mortup.iso.observers {
         public void UpdateTile(int x, int y) {
             int tileIndex = level.data.GetFloor(x, y);
             spriterenderers[x, y].sprite = Resources.Load<Sprite>("Sprites/Floor/" + tileIndex);
-            spriterenderers[x,y].sortingOrder = SortingOrder(x, y);
             isometricTransforms[x, y].UpdatePosition();
         }
 

@@ -7,8 +7,6 @@ namespace com.mortup.iso.world {
         [SerializeField] private Level level;
         [SerializeField] private Vector2Int coordinates;
 
-        private bool initialized = false;
-
         public Vector2Int coords {
             get {
                 return coordinates;
@@ -19,22 +17,24 @@ namespace com.mortup.iso.world {
             }
         }
 
-
         public void Init(Level level) {
             this.level = level;
-            initialized = true;
         }
 
         public void UpdatePosition() {
-            transform.localPosition = level.transformer.TileToLocal(coords);
-        }
+            transform.position = level.transformer.TileToWorld(coords);
 
-        private void OnValidate() {
-            if (initialized) {
-                UpdatePosition();
+            SpriteRenderer sr = GetComponent<SpriteRenderer>();
+            if (sr != null) {
+                sr.sortingOrder = level.transformer.SortingOrder(coords.x, coords.y);
             }
         }
 
+        private void OnValidate() {
+            if (level != null) {
+                UpdatePosition();
+            }
+        }
     }
 
 }

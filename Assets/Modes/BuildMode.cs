@@ -74,13 +74,15 @@ namespace com.mortup.city.gamemodes {
 
                     SpriteRenderer spriteRenderer = c.GetComponent<SpriteRenderer>();
                     spriteRenderer.sprite = GetCursorSprite(new Vector2Int(x,y));
-                    spriteRenderer.sortingOrder = level.floorObserver.SortingOrder(x, y) + 1;
+                    spriteRenderer.sortingOrder = level.transformer.SortingOrder(x, y) + 1;
                     spriteRenderer.sortingLayerName = "Floor";
                 }
             }
 
             if (Input.GetButtonDown("Undo")) {
-                commandStack.Pop().Excecute();
+                if (commandStack.Count > 0) {
+                    commandStack.Pop().Excecute();
+                }
             }
         }
 
