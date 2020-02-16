@@ -13,6 +13,7 @@ namespace com.mortup.iso {
 
         [Header("Debug Settings")]
         [SerializeField] private string levelName;
+        [SerializeField] private bool loadOnStart;
 
         private ILevelSerializer levelSerializer;
 
@@ -24,11 +25,16 @@ namespace com.mortup.iso {
                 levelSerializer = gameObject.AddComponent<NullRoomSerializer>();
             }
 
+            if (loadOnStart) {
+                LoadLevel();
+            }
+        }
+
+        public void LoadLevel() {
             data = levelSerializer.LoadLevel(levelName);
 
             floorObserver = new FloorObserver(this);
         }
-
 
         private void Update() {
             if (Input.GetKeyDown(KeyCode.S)) {

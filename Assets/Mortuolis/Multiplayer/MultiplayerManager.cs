@@ -2,22 +2,33 @@
 
 using Photon.Pun;
 using Photon.Realtime;
-using ExitGames.Client.Photon;
+
+using com.mortup.iso;
 
 public class MultiplayerManager : MonoBehaviourPunCallbacks
 {
     [SerializeField] private GameObject playerPrefab;
+    [SerializeField] private Level level;
 
     private CharacterMovement localPlayer;
 
     private readonly byte RequestPlayerPosition = 1;
 
     private void Start() {
-        JoinRoom();
+        if (PhotonNetwork.IsConnectedAndReady) {
+            JoinRoom();
+        }
+    }
+
+    public override void OnConnectedToMaster() {
+        if (PhotonNetwork.InRoom == false) {
+            JoinRoom();
+        }
     }
 
     public override void OnJoinedRoom() {
         Debug.Log("Joined room!");
+        level.LoadLevel();
         localPlayer = PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(0f, 0f, 0f), Quaternion.identity, 0).GetComponent<CharacterMovement>();
     }
 
