@@ -6,7 +6,7 @@ using Photon.Realtime;
 
 using System.Collections;
 
-namespace com.mortup.city {
+namespace com.mortup.city.multiplayer.login {
 
     [RequireComponent (typeof(InputField)) ]
     public class PlayerEmailInputField : MonoBehaviour {

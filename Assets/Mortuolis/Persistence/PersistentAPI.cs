@@ -4,7 +4,7 @@ using System.Net;
 using UnityEngine;
 using com.mortup.iso.serialization;
 
-namespace com.mortup.iso.persistence {
+namespace com.mortup.city.persistence {
 
     public class PersistentAPI {
         public static readonly string baseUrl = "http://ec2-18-237-86-178.us-west-2.compute.amazonaws.com:8000/api/";

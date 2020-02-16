@@ -7,9 +7,9 @@ using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 
-using com.mortup.iso.persistence;
+using com.mortup.city.persistence;
 
-namespace com.mortup.city {
+namespace com.mortup.city.multiplayer.login {
 
     public class Launcher : MonoBehaviourPunCallbacks {
 

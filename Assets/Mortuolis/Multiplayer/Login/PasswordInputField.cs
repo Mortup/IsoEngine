@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace com.mortup.city {
+namespace com.mortup.city.multiplayer.login {
 
     public class PasswordInputField : MonoBehaviour {
         [SerializeField] private Launcher launcher;
