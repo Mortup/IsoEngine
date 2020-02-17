@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -8,33 +9,26 @@ using com.mortup.iso.world.commands;
 
 namespace com.mortup.city.gamemodes {
 
-    public class BuildMode : GameMode {
-        [SerializeField] private Level level;
-        [SerializeField] private GameObject cursorPrefab;
+    public abstract class DraggableTileMode : GameMode {
 
-        GameObject cursorContainer;
-        int tileIndex;
+        [SerializeField] protected Level level;
+        [SerializeField] protected GameObject cursorPrefab;
 
-        Sprite regularSprite;
-        Sprite removeSprite;
+        protected GameObject cursorContainer;
 
-        Vector2Int dragStartCoords;
-        bool isDragging;
+        protected Vector2Int dragStartCoords;
+        protected bool isDragging;
 
-        Stack<IWorldCommand> commandStack;
-        List<GameObject> cursors;
+        protected List<GameObject> cursors;
+        protected Stack<IWorldCommand> commandStack;
 
         public override void Activate() {
             base.Activate();
 
-            tileIndex = 1;
-            cursorContainer = new GameObject("Build Cursors");
+            cursorContainer = new GameObject(Name() + " Cursors");
             isDragging = false;
             cursors = new List<GameObject>();
             commandStack = new Stack<IWorldCommand>();
-
-            regularSprite = Resources.Load<Sprite>("Sprites/Cursors/TileRegular");
-            removeSprite = Resources.Load<Sprite>("Sprites/Cursors/TileRemove");
         }
 
         public override void Deactivate() {
@@ -44,7 +38,7 @@ namespace com.mortup.city.gamemodes {
             //TODO: Delete pool
         }
 
-        private void Update() {
+        protected void Update() {
             DeleteCursors();
             Vector2Int mouseCoords = level.transformer.ScreenToTile(Input.mousePosition);
 
@@ -73,7 +67,7 @@ namespace com.mortup.city.gamemodes {
                     cursors.Add(c);
 
                     SpriteRenderer spriteRenderer = c.GetComponent<SpriteRenderer>();
-                    spriteRenderer.sprite = GetCursorSprite(new Vector2Int(x,y));
+                    spriteRenderer.sprite = GetCursorSprite(new Vector2Int(x, y));
                     spriteRenderer.sortingOrder = level.transformer.SortingOrder(x, y) + 1;
                     spriteRenderer.sortingLayerName = "Floor";
                 }
@@ -86,38 +80,16 @@ namespace com.mortup.city.gamemodes {
             }
         }
 
-        protected virtual IWorldCommand GetCommand(Vector2Int start, Vector2Int end) {
-            if (Input.GetButton("Remove")) {
-                return new RemoveFloorAreaCommand(level, start, end);
-            }
-            else {
-                return new BuildFloorAreaCommand(level, start, end);
-            }
-        }
+        protected abstract IWorldCommand GetCommand(Vector2Int start, Vector2Int end);
+        public abstract Sprite GetCursorSprite(Vector2Int position);
 
-        public virtual Sprite GetCursorSprite(Vector2Int position) {
-            if (level.data.IsFloorInBounds(position) == false)
-                return null;
-
-            if (Input.GetButton("Remove"))
-                return removeSprite;
-
-            if (level.data.GetFloor(position.x, position.y) != (int)FloorIndex.Empty)
-                return null;
-
-            return regularSprite;
-        }
-
-        private void DeleteCursors() {
+        protected void DeleteCursors() {
             for (int i = cursors.Count - 1; i >= 0; i--) {
                 Destroy(cursors[i]);
             }
             cursors = new List<GameObject>();
         }
 
-        protected override string Name() {
-            return "Build Mode";
-        }
     }
 
 }

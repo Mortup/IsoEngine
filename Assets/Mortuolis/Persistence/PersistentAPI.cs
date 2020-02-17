@@ -7,7 +7,7 @@ using com.mortup.iso.serialization;
 namespace com.mortup.city.persistence {
 
     public class PersistentAPI {
-        public static readonly string baseUrl = "http://ec2-18-237-86-178.us-west-2.compute.amazonaws.com:8000/api/";
+        public static readonly string baseUrl = "http://54.149.82.204:8000/api/";
 
         private static string authToken = "NOTOKEN";
 

@@ -5,6 +5,9 @@ namespace com.mortup.city.gamemodes {
     public abstract class GameMode : MonoBehaviour {
 
         public virtual void Activate() {
+            if (enabled) {
+                return;
+            }
 
             GameMode[] gameModes = FindObjectsOfType<GameMode>();
             foreach (GameMode mode in gameModes) {
