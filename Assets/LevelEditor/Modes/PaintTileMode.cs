@@ -2,6 +2,8 @@
 using com.mortup.iso.world.commands;
 using UnityEngine;
 
+using com.mortup.iso.resources;
+
 namespace com.mortup.city.gamemodes {
 
     public class PaintTileMode : DraggableTileMode {
@@ -15,6 +17,8 @@ namespace com.mortup.city.gamemodes {
             base.Activate();
 
             tileIndex = (int)FloorIndex.FirstDesign;
+            regularSprite = ResourceManager.GetTileSprite(tileIndex);
+            removeSprite = ResourceManager.GetTileSprite((int)FloorIndex.New);
         }
 
         public override Sprite GetCursorSprite(Vector2Int position) {

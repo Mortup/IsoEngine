@@ -19,6 +19,7 @@ namespace com.mortup.iso.world {
 
         public void Init(Level level) {
             this.level = level;
+            UpdatePosition();
         }
 
         public Level GetLevel() {
