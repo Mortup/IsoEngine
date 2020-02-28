@@ -8,8 +8,8 @@ namespace com.mortup.city.gamemodes {
 
     public class PaintTileMode : DraggableTileMode {
 
-        [SerializeField] private Sprite regularSprite;
-        [SerializeField] private Sprite removeSprite;
+        private Sprite regularSprite;
+        private Sprite removeSprite;
 
         private int tileIndex;
 

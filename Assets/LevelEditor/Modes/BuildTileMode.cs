@@ -7,8 +7,8 @@ using com.mortup.iso.world.commands;
 namespace com.mortup.city.gamemodes {
 
     public class BuildTileMode : DraggableTileMode {
-        [SerializeField] private Sprite regularSprite;
-        [SerializeField] private Sprite removeSprite;
+        private Sprite regularSprite;
+        private Sprite removeSprite;
 
         public override void Activate() {
             base.Activate();
