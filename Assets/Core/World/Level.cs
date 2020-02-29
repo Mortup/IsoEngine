@@ -8,6 +8,7 @@ namespace com.mortup.iso {
 
     public class Level : MonoBehaviour {
         public FloorObserver floorObserver { get; private set; }
+        public WallObserver wallObserver { get; private set; }
         public Transformer transformer { get; private set; }
         public LevelData data { get; private set; }
 
@@ -34,6 +35,7 @@ namespace com.mortup.iso {
             data = levelSerializer.LoadLevel(levelName);
 
             floorObserver = new FloorObserver(this);
+            wallObserver = new WallObserver(this);
         }
 
         private void Update() {

@@ -29,7 +29,7 @@ namespace com.mortup.iso.observers {
             tileRes.spriteRenderer.sortingLayerName = "Floor";
 
             tileRes.isometricTransform.Init(level);
-            tileRes.isometricTransform.coords = new Vector2Int(x, y);
+            tileRes.isometricTransform.coords = new Vector3Int(x, y, 0);
 
             tileResources[x, y] = tileRes;
         }

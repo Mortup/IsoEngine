@@ -5,9 +5,9 @@ namespace com.mortup.iso.world {
     public class IsometricTransform : MonoBehaviour {
 
         [SerializeField] private Level level;
-        [SerializeField] private Vector2Int coordinates;
+        [SerializeField] private Vector3Int coordinates;
 
-        public Vector2Int coords {
+        public Vector3Int coords {
             get {
                 return coordinates;
             }
@@ -27,7 +27,7 @@ namespace com.mortup.iso.world {
         }
 
         public void UpdatePosition() {
-            transform.position = level.transformer.TileToWorld(coords);
+            transform.position = level.transformer.TileToWorld(new Vector2Int(coords.x, coords.y));
 
             SpriteRenderer sr = GetComponent<SpriteRenderer>();
             if (sr != null) {
