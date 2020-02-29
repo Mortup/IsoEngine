@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace com.mortup.iso.resources {
 
-    public class SpriteTileResource : ITileResource {
+    public class SpriteResource : IResource {
         private GameObject _gameObject;
         private IsometricTransform _isometricTransform;
         private SpriteRenderer _spriteRenderer;
@@ -14,7 +14,7 @@ namespace com.mortup.iso.resources {
 
         public SpriteRenderer spriteRenderer => _spriteRenderer;
 
-        public SpriteTileResource(Sprite sprite) {
+        public SpriteResource(Sprite sprite) {
             _gameObject = new GameObject("Tile");
             _isometricTransform = _gameObject.AddComponent<IsometricTransform>();
             _spriteRenderer = _gameObject.AddComponent<SpriteRenderer>();

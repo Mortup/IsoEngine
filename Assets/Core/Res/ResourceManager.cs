@@ -4,14 +4,14 @@ namespace com.mortup.iso.resources {
 
     public class ResourceManager {
 
-        public static ITileResource GetTile(int index) {
+        public static IResource GetTile(int index) {
             string loadPath = "Sprites/Floor/" + index.ToString();
 
             if (Resources.Load<Sprite>(loadPath) != null) {
-                return new SpriteTileResource(GetTileSprite(index));
+                return new SpriteResource(GetTileSprite(index));
             }
             if (Resources.Load<GameObject>(loadPath) != null) {
-                return new PrefabTileResource(Resources.Load<GameObject>(loadPath));
+                return new PrefabResource(Resources.Load<GameObject>(loadPath));
             }
 
             Debug.LogErrorFormat("Couldn't find resource for tile {0}", index);

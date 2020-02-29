@@ -7,11 +7,11 @@ namespace com.mortup.iso.observers {
 
     public class FloorObserver {
         private Level level;
-        private ITileResource[,] tileResources;
+        private IResource[,] tileResources;
 
         public FloorObserver(Level level) {
             this.level = level;
-            tileResources = new ITileResource[level.data.width, level.data.height];
+            tileResources = new IResource[level.data.width, level.data.height];
             UpdateAllTiles();
             level.data.RegisterFloorObserver(this);
         }
@@ -21,7 +21,7 @@ namespace com.mortup.iso.observers {
 
             int tileIndex = level.data.GetFloor(x, y);
 
-            ITileResource tileRes = ResourceManager.GetTile(tileIndex);
+            IResource tileRes = ResourceManager.GetTile(tileIndex);
 
             tileRes.gameObject.name = string.Format("Floor Tile [{0}, {1}]", x, y);
             tileRes.gameObject.transform.SetParent(level.transform);
