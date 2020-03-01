@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+using com.mortup.iso.observers;
 using com.mortup.iso.world;
 
 namespace com.mortup.iso {
@@ -154,9 +155,12 @@ namespace com.mortup.iso {
                     }
                 }
 
-                // TODO: Delete this when sprites are obtained from each gameobject.
-                level.wallObserver.NotifyOrientationChange();
-                level.floorObserver.NotifyOrientationChange();
+                OrientableSprite[] orientableSprites = GameObject.FindObjectsOfType<OrientableSprite>();
+                foreach (OrientableSprite os in orientableSprites) {
+                    if (os.GetLevel() == level) {
+                        os.UpdateSprite();
+                    }
+                }
             }
         }
 

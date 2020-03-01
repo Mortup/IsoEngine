@@ -31,14 +31,11 @@ namespace com.mortup.iso.observers {
             tilePrefab.isometricTransform.Init(level, IsometricTransform.ElementType.Tile);
             tilePrefab.isometricTransform.coords = new Vector3Int(x, y, 0);
 
+            tilePrefab.orientableSprite.Init(level);
+
             tilePrefabs[x, y] = tilePrefab;
         }
-
-        // TODO: Delete this method. This should be just a creator.
-        public void NotifyOrientationChange() {
-            UpdateAllTiles();
-        }
-
+        
         private void UpdateAllTiles() {
 
             for (int x = 0; x < level.data.width; x++) {

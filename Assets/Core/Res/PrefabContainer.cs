@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+using com.mortup.iso.observers;
 using com.mortup.iso.world;
 
 namespace com.mortup.iso.resources {
@@ -9,10 +10,12 @@ namespace com.mortup.iso.resources {
         private GameObject _gameObject;
         private IsometricTransform _isometricTransform;
         private SpriteRenderer _spriteRenderer;
+        private OrientableSprite _orientableSprite;
 
         public GameObject gameObject => _gameObject;
         public IsometricTransform isometricTransform => _isometricTransform;
         public SpriteRenderer spriteRenderer => _spriteRenderer;
+        public OrientableSprite orientableSprite => _orientableSprite;
 
         public PrefabContainer (GameObject prefab) {
             _gameObject = GameObject.Instantiate(prefab);
@@ -27,6 +30,10 @@ namespace com.mortup.iso.resources {
                 _spriteRenderer = _gameObject.AddComponent<SpriteRenderer>();
             }
 
+            _orientableSprite = _gameObject.GetComponent<OrientableSprite>();
+            if (_orientableSprite == null) {
+                _orientableSprite = _gameObject.AddComponent<SingleOrientableSprite>();
+            }
         }
 
         public void Destroy() {

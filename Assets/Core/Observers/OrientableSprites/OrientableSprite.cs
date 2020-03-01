@@ -26,6 +26,10 @@ namespace com.mortup.iso.observers {
             UpdateSprite();
         }
 
+        public Level GetLevel() {
+            return level;
+        }
+
         public void UpdateSprite() {
             switch (level.transformer.GetOrientation()) {
                 case Transformer.Orientation.NORTH:

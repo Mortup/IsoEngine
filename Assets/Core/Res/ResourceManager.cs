@@ -6,14 +6,18 @@ namespace com.mortup.iso.resources {
 
     public class ResourceManager {
 
-        private const string prefabPath = "DefaultPrefabs/";
+        private const string prefabPath = "DefaultPrefabs/{0}";
+        private const string tilePath = "Sprites/Floor/{0}";
+        private const string wallSpritePath = "Sprites/Wall/{0}/Wall_00{0}_{1}";
 
         public static PrefabContainer GetTilePrefab(int index) {
-            string loadPath = "Sprites/Floor/" + index.ToString();
+            string loadPath = string.Format(tilePath, index);
 
             if (Resources.Load<Sprite>(loadPath) != null) {
-                PrefabContainer prefabContainer = new PrefabContainer(Resources.Load<GameObject>(prefabPath + "Tile"));
+                PrefabContainer prefabContainer = new PrefabContainer(Resources.Load<GameObject>(string.Format(prefabPath, "Tile")));
                 prefabContainer.spriteRenderer.sprite = GetTileSprite(index);
+                SingleOrientableSprite sos = (SingleOrientableSprite)prefabContainer.orientableSprite;
+                sos.sprite = GetTileSprite(index);
                 return prefabContainer;
             }
             if (Resources.Load<GameObject>(loadPath) != null) {
@@ -25,11 +29,17 @@ namespace com.mortup.iso.resources {
         }
 
         public static PrefabContainer GetWallPrefab(int index, int side) {
-            string loadPath = string.Format("Sprites/Wall/{0}/Wall_00{0}_{1}", index, side);
+            string loadPath = string.Format(wallSpritePath, index, side);
 
             if (Resources.Load<Sprite>(loadPath) != null) {
-                PrefabContainer prefabContainer = new PrefabContainer(Resources.Load<GameObject>(prefabPath + "Wall"));
+                PrefabContainer prefabContainer = new PrefabContainer(Resources.Load<GameObject>(string.Format(prefabPath, "Wall")));
                 prefabContainer.spriteRenderer.sprite = GetWallSprite(index, side);
+
+                BiOrientableSprite bos = prefabContainer.gameObject.GetComponent<BiOrientableSprite>();
+                bos.westEastSprite = GetWallSprite(index, 0);
+                bos.northSouthSprite = GetWallSprite(index, 1);
+                bos.invertedSide = side == 0 ? false : true;
+
                 return prefabContainer;
             }
             if (Resources.Load<GameObject>(loadPath) != null) {
@@ -41,7 +51,7 @@ namespace com.mortup.iso.resources {
         }
 
         public static Sprite GetTileSprite(int index) {
-            string loadPath = "Sprites/Floor/" + index.ToString();
+            string loadPath = string.Format(tilePath, index);
 
             Sprite sprite = Resources.Load<Sprite>(loadPath);
             if (sprite != null) {
@@ -58,7 +68,7 @@ namespace com.mortup.iso.resources {
         }
 
         public static Sprite GetWallSprite(int index, int side) {
-            string loadPath = string.Format("Sprites/Wall/{0}/Wall_00{0}_{1}", index, side);
+            string loadPath = string.Format(wallSpritePath, index, side);
 
             Sprite sprite = Resources.Load<Sprite>(loadPath);
             if (sprite != null) {

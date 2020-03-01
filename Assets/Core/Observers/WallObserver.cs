@@ -33,12 +33,9 @@ namespace com.mortup.iso.observers {
             wallRes.isometricTransform.Init(level, IsometricTransform.ElementType.Wall);
             wallRes.isometricTransform.coords = new Vector3Int(x, y, z);
 
-            wallPrefabs[x, y, z] = wallRes;
-        }
+            wallRes.orientableSprite.Init(level);
 
-        // TODO: Delete this method. This should be just a creator.
-        public void NotifyOrientationChange() {
-            UpdateAllTiles();
+            wallPrefabs[x, y, z] = wallRes;
         }
 
         private void UpdateAllTiles() {
