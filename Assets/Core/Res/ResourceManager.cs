@@ -8,6 +8,7 @@ namespace com.mortup.iso.resources {
 
         private const string prefabPath = "DefaultPrefabs/{0}";
         private const string tilePath = "Sprites/Floor/{0}";
+        private const string wallPrefabPath = "Sprites/Wall/{0}/Wall_00{0}";
         private const string wallSpritePath = "Sprites/Wall/{0}/Wall_00{0}_{1}";
 
         public static PrefabContainer GetTilePrefab(int index) {
@@ -29,9 +30,13 @@ namespace com.mortup.iso.resources {
         }
 
         public static PrefabContainer GetWallPrefab(int index, int side) {
-            string loadPath = string.Format(wallSpritePath, index, side);
+            string currentWallPrefabPath = string.Format(wallPrefabPath, index);
+            string currentWallSpritePath = string.Format(wallSpritePath, index, side);
 
-            if (Resources.Load<Sprite>(loadPath) != null) {
+            if (Resources.Load<GameObject>(wallPrefabPath) != null) {
+                return new PrefabContainer(Resources.Load<GameObject>(currentWallSpritePath));
+            }
+            if (Resources.Load<Sprite>(currentWallSpritePath) != null) {
                 PrefabContainer prefabContainer = new PrefabContainer(Resources.Load<GameObject>(string.Format(prefabPath, "Wall")));
                 prefabContainer.spriteRenderer.sprite = GetWallSprite(index, side);
 
@@ -42,11 +47,8 @@ namespace com.mortup.iso.resources {
 
                 return prefabContainer;
             }
-            if (Resources.Load<GameObject>(loadPath) != null) {
-                return new PrefabContainer(Resources.Load<GameObject>(loadPath));
-            }
 
-            Debug.LogErrorFormat("Couldn't find resource for wall {0} with path {1}", index, loadPath);
+            Debug.LogErrorFormat("Couldn't find resource for wall {0} with path {1}", index, currentWallSpritePath);
             return null;
         }
 
