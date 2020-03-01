@@ -405,8 +405,6 @@ MonoBehaviour:
   level: {fileID: 1783360209}
   cursorPrefab: {fileID: 6499704212573988391, guid: a1a59a942d396004fb4424e64d0f9cd1,
     type: 3}
-  regularSprite: {fileID: 0}
-  removeSprite: {fileID: 0}
 --- !u!114 &491537283
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -422,8 +420,6 @@ MonoBehaviour:
   level: {fileID: 1783360209}
   cursorPrefab: {fileID: 6499704212573988391, guid: a1a59a942d396004fb4424e64d0f9cd1,
     type: 3}
-  regularSprite: {fileID: 0}
-  removeSprite: {fileID: 0}
 --- !u!1 &628255255
 GameObject:
   m_ObjectHideFlags: 0
@@ -2149,6 +2145,7 @@ MonoBehaviour:
   showMouseWorld: 0
   showMouseLocal: 0
   showMouseCoordinates: 1
+  showOrientation: 1
 --- !u!114 &1713078138
 MonoBehaviour:
   m_ObjectHideFlags: 0

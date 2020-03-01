@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
 using com.mortup.iso.resources;
+using com.mortup.iso.world;
 
 namespace com.mortup.iso.observers {
 
@@ -21,17 +22,23 @@ namespace com.mortup.iso.observers {
 
             int wallIndex = level.data.GetWall(x, y, z);
 
-            IResource wallRes = ResourceManager.GetWall(wallIndex, z);
+            int rotatedZ = level.transformer.RotateWallInsideTile(new Vector3Int(x, y, z)).z;
+            IResource wallRes = ResourceManager.GetWall(wallIndex, rotatedZ);
 
             wallRes.gameObject.name = string.Format("Wall [{0}, {1} {2}]", x, y, z);
             wallRes.gameObject.transform.SetParent(level.transform);
 
             wallRes.spriteRenderer.sortingLayerName = "Wall";
 
-            wallRes.isometricTransform.Init(level);
+            wallRes.isometricTransform.Init(level, IsometricTransform.ElementType.Wall);
             wallRes.isometricTransform.coords = new Vector3Int(x, y, z);
 
             wallResources[x, y, z] = wallRes;
+        }
+
+        // TODO: Delete this method. This should be just a creator.
+        public void NotifyOrientationChange() {
+            UpdateAllTiles();
         }
 
         private void UpdateAllTiles() {

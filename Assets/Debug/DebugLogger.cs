@@ -15,6 +15,7 @@ public class DebugLogger : MonoBehaviour
     [SerializeField] private bool showMouseWorld;
     [SerializeField] private bool showMouseLocal;
     [SerializeField] private bool showMouseCoordinates;
+    [SerializeField] private bool showOrientation;
 
     private Text text;
 
@@ -48,6 +49,10 @@ public class DebugLogger : MonoBehaviour
         if (showMouseCoordinates) {
             Vector2Int mouseCoords = level.transformer.ScreenToTile(Input.mousePosition);
             output += string.Format("Mouse Coords: {0}, {1}\n", mouseCoords.x, mouseCoords.y);
+        }
+
+        if (showOrientation) {
+            output += string.Format("Orientation: {0}\n", level.transformer.GetOrientation());
         }
 
         text.text = output;

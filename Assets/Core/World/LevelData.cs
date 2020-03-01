@@ -30,6 +30,8 @@ namespace com.mortup.iso.world {
             floorObservers = new List<FloorObserver>();
             wallObservers = new List<WallObserver>();
 
+            wallTiles[0, 0, 0] = 1;
+            wallTiles[0, 0, 1] = 1;
             wallTiles[2, 2, 1] = 1;
             wallTiles[3, 1, 0] = 1;
         }

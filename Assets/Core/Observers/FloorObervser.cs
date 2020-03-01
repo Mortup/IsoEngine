@@ -28,10 +28,15 @@ namespace com.mortup.iso.observers {
 
             tileRes.spriteRenderer.sortingLayerName = "Floor";
 
-            tileRes.isometricTransform.Init(level);
+            tileRes.isometricTransform.Init(level, IsometricTransform.ElementType.Tile);
             tileRes.isometricTransform.coords = new Vector3Int(x, y, 0);
 
             tileResources[x, y] = tileRes;
+        }
+
+        // TODO: Delete this method. This should be just a creator.
+        public void NotifyOrientationChange() {
+            UpdateAllTiles();
         }
 
         private void UpdateAllTiles() {

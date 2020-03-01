@@ -5,9 +5,9 @@ public class SpritePostProcessor : AssetPostprocessor
 {
     private int PPU = 64;
     private Vector2 tilePivot = new Vector2(0f, 26f/42f);
-    private Vector2 wallPivot = new Vector2(4 / 38f, 1 / 130f);
+    private Vector2 wallPivot = new Vector2(2 / 38f, 2 / 130f);
 
-	void OnPreprocessTexture ()
+    void OnPreprocessTexture ()
 	{
 		TextureImporter textureImporter  = (TextureImporter) assetImporter;
 
