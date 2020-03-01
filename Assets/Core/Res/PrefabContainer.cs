@@ -1,9 +1,10 @@
-﻿using com.mortup.iso.world;
-using UnityEngine;
+﻿using UnityEngine;
+
+using com.mortup.iso.world;
 
 namespace com.mortup.iso.resources {
 
-    public class PrefabResource : IResource {
+    public class PrefabContainer {
 
         private GameObject _gameObject;
         private IsometricTransform _isometricTransform;
@@ -13,7 +14,7 @@ namespace com.mortup.iso.resources {
         public IsometricTransform isometricTransform => _isometricTransform;
         public SpriteRenderer spriteRenderer => _spriteRenderer;
 
-        public PrefabResource (GameObject prefab) {
+        public PrefabContainer (GameObject prefab) {
             _gameObject = GameObject.Instantiate(prefab);
 
             _isometricTransform = _gameObject.GetComponent<IsometricTransform>();
@@ -25,6 +26,7 @@ namespace com.mortup.iso.resources {
             if (_spriteRenderer == null) {
                 _spriteRenderer = _gameObject.AddComponent<SpriteRenderer>();
             }
+
         }
 
         public void Destroy() {

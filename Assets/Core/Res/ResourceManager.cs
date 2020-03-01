@@ -1,31 +1,39 @@
 ﻿using UnityEngine;
 
+using com.mortup.iso.observers;
+
 namespace com.mortup.iso.resources {
 
     public class ResourceManager {
 
-        public static IResource GetTile(int index) {
+        private const string prefabPath = "DefaultPrefabs/";
+
+        public static PrefabContainer GetTilePrefab(int index) {
             string loadPath = "Sprites/Floor/" + index.ToString();
 
             if (Resources.Load<Sprite>(loadPath) != null) {
-                return new SpriteResource(GetTileSprite(index));
+                PrefabContainer prefabContainer = new PrefabContainer(Resources.Load<GameObject>(prefabPath + "Tile"));
+                prefabContainer.spriteRenderer.sprite = GetTileSprite(index);
+                return prefabContainer;
             }
             if (Resources.Load<GameObject>(loadPath) != null) {
-                return new PrefabResource(Resources.Load<GameObject>(loadPath));
+                return new PrefabContainer(Resources.Load<GameObject>(loadPath));
             }
 
             Debug.LogErrorFormat("Couldn't find resource for tile {0}", index);
             return null;
         }
 
-        public static IResource GetWall(int index, int side) {
+        public static PrefabContainer GetWallPrefab(int index, int side) {
             string loadPath = string.Format("Sprites/Wall/{0}/Wall_00{0}_{1}", index, side);
 
             if (Resources.Load<Sprite>(loadPath) != null) {
-                return new SpriteResource(GetWallSprite(index, side));
+                PrefabContainer prefabContainer = new PrefabContainer(Resources.Load<GameObject>(prefabPath + "Wall"));
+                prefabContainer.spriteRenderer.sprite = GetWallSprite(index, side);
+                return prefabContainer;
             }
             if (Resources.Load<GameObject>(loadPath) != null) {
-                return new PrefabResource(Resources.Load<GameObject>(loadPath));
+                return new PrefabContainer(Resources.Load<GameObject>(loadPath));
             }
 
             Debug.LogErrorFormat("Couldn't find resource for wall {0} with path {1}", index, loadPath);

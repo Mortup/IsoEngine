@@ -8,11 +8,11 @@ namespace com.mortup.iso.observers {
     public class WallObserver {
 
         Level level;
-        IResource[,,] wallResources;
+        PrefabContainer[,,] wallPrefabs;
         
         public WallObserver(Level level) {
             this.level = level;
-            wallResources = new IResource[level.data.width + 1, level.data.height + 1, 2];
+            wallPrefabs = new PrefabContainer[level.data.width + 1, level.data.height + 1, 2];
             UpdateAllTiles();
             level.data.RegisterWallObserver(this);
         }
@@ -23,7 +23,7 @@ namespace com.mortup.iso.observers {
             int wallIndex = level.data.GetWall(x, y, z);
 
             int rotatedZ = level.transformer.RotateWallInsideTile(new Vector3Int(x, y, z)).z;
-            IResource wallRes = ResourceManager.GetWall(wallIndex, rotatedZ);
+            PrefabContainer wallRes = ResourceManager.GetWallPrefab(wallIndex, rotatedZ);
 
             wallRes.gameObject.name = string.Format("Wall [{0}, {1} {2}]", x, y, z);
             wallRes.gameObject.transform.SetParent(level.transform);
@@ -33,7 +33,7 @@ namespace com.mortup.iso.observers {
             wallRes.isometricTransform.Init(level, IsometricTransform.ElementType.Wall);
             wallRes.isometricTransform.coords = new Vector3Int(x, y, z);
 
-            wallResources[x, y, z] = wallRes;
+            wallPrefabs[x, y, z] = wallRes;
         }
 
         // TODO: Delete this method. This should be just a creator.
@@ -53,8 +53,8 @@ namespace com.mortup.iso.observers {
         }
 
         public void DestroyWall(int x, int y, int z) {
-            if (wallResources[x,y,z] != null) {
-                wallResources[x, y, z].Destroy();
+            if (wallPrefabs[x,y,z] != null) {
+                wallPrefabs[x, y, z].Destroy();
             }
         }
 

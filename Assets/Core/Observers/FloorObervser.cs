@@ -7,11 +7,11 @@ namespace com.mortup.iso.observers {
 
     public class FloorObserver {
         private Level level;
-        private IResource[,] tileResources;
+        private PrefabContainer[,] tilePrefabs;
 
         public FloorObserver(Level level) {
             this.level = level;
-            tileResources = new IResource[level.data.width, level.data.height];
+            tilePrefabs = new PrefabContainer[level.data.width, level.data.height];
             UpdateAllTiles();
             level.data.RegisterFloorObserver(this);
         }
@@ -21,17 +21,17 @@ namespace com.mortup.iso.observers {
 
             int tileIndex = level.data.GetFloor(x, y);
 
-            IResource tileRes = ResourceManager.GetTile(tileIndex);
+            PrefabContainer tilePrefab = ResourceManager.GetTilePrefab(tileIndex);
 
-            tileRes.gameObject.name = string.Format("Floor Tile [{0}, {1}]", x, y);
-            tileRes.gameObject.transform.SetParent(level.transform);
+            tilePrefab.gameObject.name = string.Format("Floor Tile [{0}, {1}]", x, y);
+            tilePrefab.gameObject.transform.SetParent(level.transform);
 
-            tileRes.spriteRenderer.sortingLayerName = "Floor";
+            tilePrefab.spriteRenderer.sortingLayerName = "Floor";
 
-            tileRes.isometricTransform.Init(level, IsometricTransform.ElementType.Tile);
-            tileRes.isometricTransform.coords = new Vector3Int(x, y, 0);
+            tilePrefab.isometricTransform.Init(level, IsometricTransform.ElementType.Tile);
+            tilePrefab.isometricTransform.coords = new Vector3Int(x, y, 0);
 
-            tileResources[x, y] = tileRes;
+            tilePrefabs[x, y] = tilePrefab;
         }
 
         // TODO: Delete this method. This should be just a creator.
@@ -50,8 +50,8 @@ namespace com.mortup.iso.observers {
         }
 
         private void DestroyTile(int x, int y) {
-            if (tileResources[x,y] != null) {
-                tileResources[x, y].Destroy();
+            if (tilePrefabs[x,y] != null) {
+                tilePrefabs[x, y].Destroy();
             }
         }
 
