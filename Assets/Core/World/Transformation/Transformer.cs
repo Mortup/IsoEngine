@@ -71,7 +71,7 @@ namespace com.mortup.iso {
 
         // Wall Positions
         public Vector2 WallToLocal(int x, int y, int z) {
-            Vector3Int rotatedCoords = RotateWall(new Vector3Int(x, y, z));
+            Vector3Int rotatedCoords = RotateWall(new Vector3Int(x, y - 1, z));
             int rotatedX = rotatedCoords.x;
             int rotatedY = rotatedCoords.y;
             int rotatedZ = rotatedCoords.z;
@@ -99,14 +99,15 @@ namespace com.mortup.iso {
         }
 
         public Vector3Int LocalToWall(Vector2 local) {
-            int gridX = Mathf.FloorToInt(local.x / 0.5f) + 1;
-            int gridY = Mathf.FloorToInt(-local.y / 0.25f) + 1;
+            int gridX = Mathf.FloorToInt(local.x / 0.5f);
+            int gridY = -1 * Mathf.FloorToInt(local.y / 0.25f);
 
-            int x = Mathf.CeilToInt((gridY / 2f) - (gridX / 2f));
-            int y = Mathf.FloorToInt((gridX / 2f) + (gridY / 2f));
-            int z = Mathf.Abs(Mathf.Abs(gridX % 2) - Mathf.Abs(gridY % 2));
+            int x = Mathf.FloorToInt((gridY / 2f) + (gridX / 2f));
+            int y = Mathf.FloorToInt((gridX / 2f) - (gridY / 2f));
+            int z = Mathf.Abs(Mathf.Abs(gridY % 2) - Mathf.Abs(gridX % 2));
 
-            return InverseRotateWall(new Vector3Int(x, y, z));
+            Vector3Int unrotated = InverseRotateWall(new Vector3Int(x, y, z));
+            return new Vector3Int(unrotated.x, unrotated.y + 1, unrotated.z);
         }
 
         public Vector3Int WorldToWall(Vector2 world) {
@@ -114,13 +115,45 @@ namespace com.mortup.iso {
             return LocalToWall(local);
         }
 
-        public Vector3Int ScreenToWall(Vector2 screenCoords) {
-            Vector2 world = Camera.main.ScreenToWorldPoint(screenCoords);
+        public Vector3Int ScreenToWall(Vector2 screenPosition) {
+            Vector2 world = Camera.main.ScreenToWorldPoint(screenPosition);
             return WorldToWall(world);
         }
 
-        public Vector2 MouseWallRounded() {
-            return WallToWorld(ScreenToWall(Input.mousePosition));
+        public Vector2 ScreenWallRounded(Vector2 screenPosition) {
+            return WallToWorld(ScreenToWall(screenPosition));
+        }
+
+        // Vertex Positions
+        public Vector2 VertexToLocal(int x, int y) {
+            return TileToLocal(x, y);
+        }
+
+        public Vector2 VertexToLocal(Vector2Int vertex) {
+            return VertexToLocal(vertex.x, vertex.y);
+        }
+
+        public Vector2 VertexToWorld(Vector2Int vertex) {
+            Vector2 local = VertexToLocal(vertex);
+            return levelTransform.TransformPoint(local);
+        }
+
+        public Vector2Int LocalToVertex(Vector2 local) {
+            return LocalToTile(local + Vector2.right * 0.5f);
+        }
+
+        public Vector2Int WorldToVertex(Vector2 world) {
+            Vector2 local = levelTransform.InverseTransformPoint(world);
+            return LocalToVertex(local);
+        }
+
+        public Vector2Int ScreenToVertex(Vector2 screenPosition) {
+            Vector2 world = Camera.main.ScreenToWorldPoint(screenPosition);
+            return WorldToVertex(world);
+        }
+
+        public Vector2 ScreenVertexRounded(Vector2 screenPosition) {
+            return VertexToWorld(ScreenToVertex(screenPosition));
         }
 
         // Sorting Order

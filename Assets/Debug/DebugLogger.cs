@@ -16,6 +16,8 @@ public class DebugLogger : MonoBehaviour
     [SerializeField] private bool showMouseLocal;
     [SerializeField] private bool showMouseCoordinates;
     [SerializeField] private bool showOrientation;
+    [SerializeField] private bool showMouseWallCoordinates;
+    [SerializeField] private bool showVertexCoordinates;
 
     private Text text;
 
@@ -53,6 +55,15 @@ public class DebugLogger : MonoBehaviour
 
         if (showOrientation) {
             output += string.Format("Orientation: {0}\n", level.transformer.GetOrientation());
+        }
+
+        if (showMouseWallCoordinates) {
+            Vector3Int wallCoords = level.transformer.ScreenToWall(Input.mousePosition);
+            output += string.Format("Wall Coords: {0}, {1}, {2}\n", wallCoords.x, wallCoords.y, wallCoords.z);
+        }
+        if (showVertexCoordinates) {
+            Vector2Int vertexCoords = level.transformer.ScreenToVertex(Input.mousePosition);
+            output += string.Format("Vertex Coords: {0}, {1}\n", vertexCoords.x, vertexCoords.y);
         }
 
         text.text = output;
