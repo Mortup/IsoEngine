@@ -10,7 +10,7 @@ namespace com.mortup.iso.observers {
 
         private SpriteRenderer spriteRenderer;
 
-        private void Awake() {
+        protected virtual void Awake() {
             spriteRenderer = GetComponent<SpriteRenderer>();
 
             if (spriteRenderer == null) {

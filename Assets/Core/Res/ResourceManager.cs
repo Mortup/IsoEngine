@@ -40,10 +40,10 @@ namespace com.mortup.iso.resources {
                 PrefabContainer prefabContainer = new PrefabContainer(Resources.Load<GameObject>(string.Format(prefabPath, "Wall")));
                 prefabContainer.spriteRenderer.sprite = GetWallSprite(index, side);
 
-                BiOrientableSprite bos = prefabContainer.gameObject.GetComponent<BiOrientableSprite>();
-                bos.westEastSprite = GetWallSprite(index, 0);
-                bos.northSouthSprite = GetWallSprite(index, 1);
-                bos.invertedSide = side == 0 ? false : true;
+                WallOrientableSprite wallOrientableSprite = prefabContainer.gameObject.GetComponent<WallOrientableSprite>();
+                wallOrientableSprite.westEastSprite = GetWallSprite(index, 0);
+                wallOrientableSprite.northSouthSprite = GetWallSprite(index, 1);
+                wallOrientableSprite.invertedSide = side == 0 ? false : true;
 
                 return prefabContainer;
             }

@@ -25,13 +25,17 @@ namespace com.mortup.city.camera {
                 }
             }
             else {
-                if (Input.GetMouseButtonDown(1) && !EventSystem.current.IsPointerOverGameObject()) {
+                if (Input.GetMouseButtonDown(1) && !IsOverUI()) {
                     isDragging = true;
                     lastMousePosition = Input.mousePosition;
                     dragStartPosition = cam.transform.position;
                 }
             }
 
+        }
+
+        private bool IsOverUI() {
+            return EventSystem.current != null && EventSystem.current.IsPointerOverGameObject();
         }
 
     }

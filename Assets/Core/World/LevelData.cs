@@ -29,11 +29,6 @@ namespace com.mortup.iso.world {
 
             floorObservers = new List<FloorObserver>();
             wallObservers = new List<WallObserver>();
-
-            wallTiles[0, 0, 0] = 1;
-            wallTiles[0, 0, 1] = 1;
-            wallTiles[2, 2, 1] = 1;
-            wallTiles[3, 1, 0] = 1;
         }
 
         public int GetFloor(int x, int y) {
@@ -63,10 +58,21 @@ namespace com.mortup.iso.world {
         }
 
         public int GetWall(int x, int y, int z) {
+            if (IsWallInBounds(new Vector3Int(x,y,z)) == false) {
+                return (int)FloorIndex.Empty;
+            }
             return wallTiles[x, y, z];
         }
 
+        public int GetWall(Vector3Int coords) {
+            return GetWall(coords.x, coords.y, coords.z);
+        }
+
         public void SetWall(int x, int y, int z, int value) {
+            if (IsWallInBounds(new Vector3Int(x, y, z)) == false) {
+                return;
+            }
+
             wallTiles[x, y, z] = value;
 
             foreach (WallObserver observer in wallObservers) {
@@ -84,6 +90,16 @@ namespace com.mortup.iso.world {
             }
 
             if (coords.y < 0 || coords.y > height) {
+                return false;
+            }
+
+            // Edge case bottom left
+            if (coords.y == 0  && coords.z == 0) {
+                return false;
+            }
+
+            // Edge case bottom right
+            if (coords.x == width && coords.z == 1) {
                 return false;
             }
 

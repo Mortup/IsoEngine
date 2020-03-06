@@ -3,9 +3,9 @@ using UnityEditor;
 
 public class SpritePostProcessor : AssetPostprocessor
 {
-    private int PPU = 64;
-    private Vector2 tilePivot = new Vector2(0f, 26f/42f);
-    private Vector2 wallPivot = new Vector2(2 / 38f, 2 / 130f);
+    private int PPU = Settings.PPU;
+    private Vector2 tilePivot = Settings.TilePivot;
+    public Vector2 wallPivot = Settings.WallPivot;
 
     void OnPreprocessTexture ()
 	{
