@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace com.mortup.iso.world.commands {
 
-    public class BuildWallLineCommand : IWorldCommand {
+    public class RemoveWallLineCommand : IWorldCommand {
 
         private CompositeCommand command;
 
-        public BuildWallLineCommand(Level level, Vector2Int vertexStart, Vector2Int vertexEnd, int wallType = (int)WallIndex.New) {
+        public RemoveWallLineCommand(Level level, Vector2Int vertexStart, Vector2Int vertexEnd) {
             if (vertexEnd.x != vertexEnd.x && vertexStart.y != vertexEnd.y) {
                 Debug.Log("Diagonal lines are not allowed.");
             }
@@ -33,7 +33,7 @@ namespace com.mortup.iso.world.commands {
 
             for (int x = xMin; x <= xMax; x++) {
                 for (int y = yMin; y <= yMax; y++) {
-                    commands.Add(new BuildWallCommand(level, new Vector3Int(x,y,z), wallType));
+                    commands.Add(new RemoveWallCommand(level, new Vector3Int(x, y, z)));
                 }
 
             }

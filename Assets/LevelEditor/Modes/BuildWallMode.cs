@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 
 using com.mortup.iso;
 using com.mortup.iso.world.commands;
+using com.mortup.iso.world;
 
 namespace com.mortup.city.gamemodes {
 
@@ -45,6 +46,17 @@ namespace com.mortup.city.gamemodes {
         }
 
         private void Update() {
+            if (Input.GetButtonDown("Undo")) {
+                Undo();
+            }
+
+            if (Input.GetButton("Remove")) {
+                cursorSprite = Resources.Load<Sprite>("Sprites/Cursors/RemoveVertex");
+            }
+            else {
+                cursorSprite = Resources.Load<Sprite>("Sprites/Cursors/BuildVertex");
+            }
+
             DestroyCursors();
 
             Vector2Int vertexCoords = level.transformer.ScreenToVertex(Input.mousePosition);
@@ -63,15 +75,22 @@ namespace com.mortup.city.gamemodes {
                 isDragging = false;
 
                 Vector2Int closestStraightMouseCoords;
+                Vector2Int offset = Vector2Int.zero;
                 if (Mathf.Abs(vertexCoords.x - startDragCoords.x) > Mathf.Abs(vertexCoords.y - startDragCoords.y)) {
                     closestStraightMouseCoords = new Vector2Int(vertexCoords.x, startDragCoords.y);
-                    commandStack.Push(new BuildWallLineCommand(level, startDragCoords, closestStraightMouseCoords).Excecute());
                 }
                 else {
                     closestStraightMouseCoords = new Vector2Int(startDragCoords.x, vertexCoords.y);
-                    Vector2Int offset = new Vector2Int(0, 1);
+                    offset = new Vector2Int(0, 1);
+                }
+
+                if (Input.GetButton("Remove")) {
+                    commandStack.Push(new RemoveWallLineCommand(level, startDragCoords + offset, closestStraightMouseCoords + offset).Excecute());
+                }
+                else {
                     commandStack.Push(new BuildWallLineCommand(level, startDragCoords + offset, closestStraightMouseCoords + offset).Excecute());
                 }
+
             }
 
             if (isDragging) {
@@ -98,6 +117,13 @@ namespace com.mortup.city.gamemodes {
                         c.GetComponent<SpriteRenderer>().sortingLayerName = "Wall";
                     }
                 }
+            }
+        }
+
+        private void Undo() {
+            if (commandStack != null && commandStack.Count > 0) {
+                IWorldCommand command = commandStack.Pop();
+                command.Excecute();
             }
         }
 
