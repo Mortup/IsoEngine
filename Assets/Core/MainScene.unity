@@ -450,6 +450,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: {fileID: 1783360209}
+  cursorPrefab: {fileID: 6499704212573988391, guid: a1a59a942d396004fb4424e64d0f9cd1,
+    type: 3}
 --- !u!1 &628255255
 GameObject:
   m_ObjectHideFlags: 0

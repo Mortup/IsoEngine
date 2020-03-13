@@ -84,6 +84,10 @@ namespace com.mortup.city.gamemodes {
         public abstract Sprite GetCursorSprite(Vector2Int position);
 
         protected void DeleteCursors() {
+            if (cursors == null) {
+                return;
+            }
+
             for (int i = cursors.Count - 1; i >= 0; i--) {
                 Destroy(cursors[i]);
             }

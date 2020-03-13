@@ -16,14 +16,12 @@ namespace com.mortup.city.gamemodes {
                 }
             }
 
-            Debug.Log("Activating " + Name());
             enabled = true;
         }
 
         protected abstract string Name();
 
         public virtual void Deactivate() {
-            Debug.Log("Deactivating " + Name());
             enabled = false;
         }
     }

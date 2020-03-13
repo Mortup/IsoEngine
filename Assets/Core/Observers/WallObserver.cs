@@ -23,7 +23,7 @@ namespace com.mortup.iso.observers {
             int wallIndex = level.data.GetWall(x, y, z);
 
             int rotatedZ = level.transformer.RotateWallInsideTile(new Vector3Int(x, y, z)).z;
-            PrefabContainer wallRes = ResourceManager.GetWallPrefab(wallIndex, rotatedZ);
+            PrefabContainer wallRes = ResourceManager.GetWallPrefab(wallIndex, z);
 
             wallRes.gameObject.name = string.Format("Wall [{0}, {1} {2}]", x, y, z);
             wallRes.gameObject.transform.SetParent(level.transform);

@@ -126,7 +126,22 @@ namespace com.mortup.iso {
 
         // Vertex Positions
         public Vector2 VertexToLocal(int x, int y) {
-            return TileToLocal(x, y);
+            Vector2Int orientationOffset = Vector2Int.zero;
+            switch (GetOrientation()) {
+                case Orientation.NORTH:
+                    break;
+                case Orientation.EAST:
+                    orientationOffset = new Vector2Int(0, -1);
+                    break;
+                case Orientation.SOUTH:
+                    orientationOffset = new Vector2Int(-1, -1);
+                    break;
+                case Orientation.WEST:
+                    orientationOffset = new Vector2Int(-1, 0);
+                    break;
+            }
+
+            return TileToLocal(x + orientationOffset.x, y + orientationOffset.y);
         }
 
         public Vector2 VertexToLocal(Vector2Int vertex) {
@@ -138,8 +153,29 @@ namespace com.mortup.iso {
             return levelTransform.TransformPoint(local);
         }
 
+        public Vector2 VertexToWorld(int x, int y) {
+            return VertexToWorld(new Vector2Int(x, y));
+        }
+
         public Vector2Int LocalToVertex(Vector2 local) {
-            return LocalToTile(local + Vector2.right * 0.5f);
+            Vector2Int tile = LocalToTile(local + Vector2.right * 0.5f);
+            Vector2Int orientationOffset = Vector2Int.zero;
+
+            switch (GetOrientation()) {
+                case Orientation.NORTH:
+                    break;
+                case Orientation.EAST:
+                    orientationOffset = new Vector2Int(0, 1);
+                    break;
+                case Orientation.SOUTH:
+                    orientationOffset = new Vector2Int(1, 1);
+                    break;
+                case Orientation.WEST:
+                    orientationOffset = new Vector2Int(1,0);
+                    break;
+            }
+
+            return tile + orientationOffset;
         }
 
         public Vector2Int WorldToVertex(Vector2 world) {

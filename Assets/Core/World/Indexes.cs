@@ -6,4 +6,10 @@
         FirstDesign = 2,
     }
 
+    public enum WallIndex {
+        Empty = 0,
+        New = 1,
+        FirstDesign = 2,
+    }
+
 }
