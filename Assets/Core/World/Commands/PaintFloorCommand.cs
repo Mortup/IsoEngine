@@ -16,12 +16,13 @@ namespace com.mortup.iso.world.commands {
 
         public IWorldCommand Excecute() {
             if (floorType == (int)FloorIndex.Empty) {
-                Debug.LogWarning("Can't use paint floor commands to build tiles.");
+                Debug.LogWarning("Can't use paint floor commands to remove tiles.");
                 return new NullCommand();
             }
 
             int initialType = level.data.GetFloor(position.x, position.y);
             if (initialType == (int)FloorIndex.Empty) {
+                Debug.LogWarning("Can't use paint floor commands to build tiles.");
                 return new NullCommand();
             }
 
