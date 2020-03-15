@@ -14,6 +14,7 @@ namespace com.mortup.iso.world {
 
         private int[,] floorTiles;
         private int[,,] wallTiles;
+        private int[,] items;
 
         private List<FloorObserver> floorObservers;
         private List<WallObserver> wallObservers;

@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.IO;
+
+using UnityEngine;
 
 using com.mortup.iso.observers;
 
@@ -6,10 +8,26 @@ namespace com.mortup.iso.resources {
 
     public class ResourceManager {
 
-        private const string prefabPath = "DefaultPrefabs/{0}";
-        private const string tilePath = "Sprites/Floor/{0}";
-        private const string wallPrefabPath = "Sprites/Wall/{0}/Wall_00{0}";
-        private const string wallSpritePath = "Sprites/Wall/{0}/Wall_00{0}_{1}";
+        private static string prefabPath {
+            get {
+                return Path.Combine(Settings.basePath, "DefaultPrefabs/{0}");
+            }
+        }
+        private static string tilePath {
+            get {
+                return Path.Combine(Settings.basePath, "Sprites/Floor/{0}");
+            }
+        }
+        private static string wallPrefabPath {
+            get {
+                return Path.Combine(Settings.basePath, "Sprites/Wall/{0}/Wall_00{0}");
+            }
+        }
+        private static string wallSpritePath {
+            get {
+                return Path.Combine(Settings.basePath, "Sprites/Wall/{0}/Wall_00{0}_{1}");
+            }
+        }
 
         public static PrefabContainer GetTilePrefab(int index) {
             string loadPath = string.Format(tilePath, index);

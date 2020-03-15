@@ -21,7 +21,7 @@ namespace com.mortup.iso {
         private Vector2 TileToLocalNoRotation(int tileX, int tileY) {
             float x = (tileX + tileY) * 0.5f;
             float y = (tileY - tileX) * 0.25f;
-            return new Vector2(x, y);
+            return new Vector2(x + 0.01f, y);
         }
 
         public Vector2 TileToLocal(int tileX, int tileY) {

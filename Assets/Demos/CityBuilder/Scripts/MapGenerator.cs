@@ -8,6 +8,7 @@ namespace com.mortup.citybuilder {
 
     public class MapGenerator : MonoBehaviour, ILevelSerializer {
 
+        [Range (0,1)][SerializeField] private float pathProbability;
         [SerializeField] private int width;
         [SerializeField] private int height;
 
@@ -17,26 +18,14 @@ namespace com.mortup.citybuilder {
 
             for (int x = 0; x < width; x++) {
                 for (int y = 0; y < height; y++) {
-                    levelData.SetFloor(x, y, 3);
+                    if (Random.value < pathProbability) {
+                        levelData.SetFloor(x, y, 1);
+                    }
+                    else {
+                        levelData.SetFloor(x, y, 0);
+                    }
                 }
             }
-
-            for (int x = 3; x < 5; x++) {
-                for (int y = 0; y < height; y++) {
-                    levelData.SetFloor(y, x, 1);
-                }
-            }
-
-            levelData.SetFloor(2, 0, 1);
-            levelData.SetFloor(2, 1, 1);
-            levelData.SetFloor(2, 2, 1);
-            levelData.SetFloor(8, 5, 1);
-            levelData.SetFloor(8, 6, 1);
-            levelData.SetFloor(7, 6, 1);
-            levelData.SetFloor(6, 6, 1);
-            levelData.SetFloor(6, 7, 1);
-            levelData.SetFloor(6, 8, 1);
-            levelData.SetFloor(6, 9, 1);
 
             return levelData;
         }

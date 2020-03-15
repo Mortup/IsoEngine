@@ -31,19 +31,23 @@ namespace com.mortup.iso.observers {
         }
 
         public void UpdateSprite() {
+            Sprite sprite;
             switch (level.transformer.GetOrientation()) {
                 case Transformer.Orientation.NORTH:
-                    spriteRenderer.sprite = GetNorthSprite();
+                    sprite = GetNorthSprite();
                     break;
                 case Transformer.Orientation.SOUTH:
-                    spriteRenderer.sprite = GetSouthSprite();
+                    sprite = GetSouthSprite();
                     break;
                 case Transformer.Orientation.WEST:
-                    spriteRenderer.sprite = GetWestSprite();
+                    sprite = GetWestSprite();
                     break;
-                case Transformer.Orientation.EAST:
-                    spriteRenderer.sprite = GetEastSprite();
+                default:
+                    sprite = GetEastSprite();
                     break;
+            }
+            if (sprite != null) {
+                spriteRenderer.sprite = sprite;
             }
         }
 
