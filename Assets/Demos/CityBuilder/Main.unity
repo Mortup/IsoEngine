@@ -1557,8 +1557,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: {fileID: 1783360209}
+  cursorPrefab: {fileID: 1442984827913048165, guid: acc507f73f8eac04fbaa1d82ba0fb999,
+    type: 3}
   goodTile: {fileID: 21300000, guid: 0cb67d13ed5c10a4797e4dbefaae6f99, type: 3}
   badTile: {fileID: 21300000, guid: fc2ffb8eecfaa674b86916b91023d9ac, type: 3}
+  pathMoneyPrice: 2
+  houseFoodPrice: 5
+  farmMoneyPrice: 15
 --- !u!4 &1904434630
 Transform:
   m_ObjectHideFlags: 0
