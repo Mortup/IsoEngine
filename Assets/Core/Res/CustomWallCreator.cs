@@ -18,7 +18,7 @@ namespace com.mortup.iso.resources {
         private static Vector2Int BackTop = new Vector2Int(33, 129);
 
         public static Sprite DrawSpriteBorders(Sprite spr, int rotatedZ, InmediateWallNeighbors neighbors, bool isCropped) {
-            Texture2D tex = new Texture2D(spr.texture.width, spr.texture.height, spr.texture.format, false);
+            Texture2D tex = new Texture2D(spr.texture.width, spr.texture.height, spr.texture.format, false, false);
             tex.filterMode = FilterMode.Point;
             tex.wrapMode = TextureWrapMode.Clamp;
 

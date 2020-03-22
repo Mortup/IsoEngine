@@ -28,7 +28,10 @@ public class SpritePostProcessor : AssetPostprocessor
             tis.spritePivot = wallPivot;
         }
 
-        textureImporter.SetTextureSettings (tis);
+        textureImporter.SetTextureSettings(tis);
+
+        UnityEditor.TextureCompressionQuality tcq = new UnityEditor.TextureCompressionQuality();
+
 	}
 
 }

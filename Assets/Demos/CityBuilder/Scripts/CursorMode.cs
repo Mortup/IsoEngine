@@ -131,11 +131,11 @@ public class CursorMode : MonoBehaviour
             if (level.data.IsFloorInBounds(new Vector2Int(x - 1, y))) {
                 nextToPath = nextToPath || level.data.GetFloor(x - 1, y) == 1;
             }
-            if (level.data.IsFloorInBounds(new Vector2Int(x, y+1))) {
-                nextToPath = nextToPath || level.data.GetFloor(x, y+1) == 1;
-                if (level.data.IsFloorInBounds(new Vector2Int(x, y-1))) {
-                    nextToPath = nextToPath || level.data.GetFloor(x, y-1) == 1;
-                }
+            if (level.data.IsFloorInBounds(new Vector2Int(x, y + 1))) {
+                nextToPath = nextToPath || level.data.GetFloor(x, y + 1) == 1;
+            }
+            if (level.data.IsFloorInBounds(new Vector2Int(x, y - 1))) {
+                nextToPath = nextToPath || level.data.GetFloor(x, y - 1) == 1;
             }
 
             if (nextToPath == false)
