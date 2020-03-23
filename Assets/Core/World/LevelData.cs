@@ -18,6 +18,7 @@ namespace com.mortup.iso.world {
 
         private List<FloorObserver> floorObservers;
         private List<WallObserver> wallObservers;
+        private List<ItemObserver> itemObservers;
 
         public LevelData(int width, int height) {
             id = -1;
@@ -27,9 +28,13 @@ namespace com.mortup.iso.world {
             this.height = height;
             floorTiles = new int[width, height];
             wallTiles = new int[width + 1, height + 1, 2];
+            items = new int[width, height];
 
             floorObservers = new List<FloorObserver>();
             wallObservers = new List<WallObserver>();
+            itemObservers = new List<ItemObserver>();
+
+            items[2, 4] = 1;
         }
 
         public int GetFloor(int x, int y) {
@@ -37,6 +42,10 @@ namespace com.mortup.iso.world {
         }
 
         public void SetFloor(int x, int y, int value) {
+            if (IsFloorInBounds(new Vector2Int(x,y)) == false) {
+                return;
+            }
+
             floorTiles[x, y] = value;
 
             foreach (FloorObserver observer in floorObservers) {
@@ -105,6 +114,34 @@ namespace com.mortup.iso.world {
             }
 
             return coords.z == 0 || coords.z == 1;
+        }
+
+        public void RegisterItemObserver(ItemObserver observer) {
+            itemObservers.Add(observer);
+        }
+
+        public bool IsItemInBounds(Vector2Int coords) {
+            return IsFloorInBounds(coords);
+        }
+
+        public int GetItem (int x, int y) {
+            return items[x, y];
+        }
+
+        public int GetItem(Vector2Int coords) {
+            return GetItem(coords.x, coords.y);
+        }
+
+        public void SetItem(int x, int y, int val) {
+            if (IsItemInBounds(new Vector2Int(x,y)) == false) {
+                return;
+            }
+
+            items[x, y] = val;
+
+            foreach (ItemObserver observer in itemObservers) {
+                observer.UpdateItem(x, y);
+            }
         }
     }
 

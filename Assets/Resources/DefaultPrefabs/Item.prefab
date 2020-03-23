@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 4767638039580106485}
   - component: {fileID: -2174833415638713233}
   - component: {fileID: 7185499779611653450}
-  - component: {fileID: 2065375358951909990}
+  - component: {fileID: -4026427530576051757}
   m_Layer: 0
-  m_Name: Wall
+  m_Name: Item
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: {fileID: 0}
   coordinates: {x: 0, y: 0, z: 0}
-  elementType: 1
+  elementType: 2
 --- !u!212 &7185499779611653450
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -86,7 +86,7 @@ SpriteRenderer:
   m_SortingLayerID: -213574301
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: cd638e8dd108a224dba0a7af7b8b7189, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6361b9521ad81b94ba9bb5aafe48524c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -97,7 +97,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2065375358951909990
+--- !u!114 &-4026427530576051757
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -106,10 +106,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 4133593323623088377}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17d1350fdd3280a49a845c0c396a9fca, type: 3}
+  m_Script: {fileID: 11500000, guid: 32d440c78cce2204da5d41820c1ac458, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   level: {fileID: 0}
-  northSouthSprite: {fileID: 0}
-  westEastSprite: {fileID: 0}
-  invertedSide: 0
+  northSprite: {fileID: 0}
+  eastSprite: {fileID: 0}
+  westSprite: {fileID: 0}
+  southSprite: {fileID: 0}

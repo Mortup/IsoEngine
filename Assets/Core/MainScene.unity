@@ -995,6 +995,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc0c41636261d7040afc5d7f680fda5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scaleFactor: 0
 --- !u!20 &768148142
 Camera:
   m_ObjectHideFlags: 0
@@ -2223,7 +2224,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 491537280}
+      - m_Target: {fileID: 491537282}
         m_MethodName: Activate
         m_Mode: 1
         m_Arguments:

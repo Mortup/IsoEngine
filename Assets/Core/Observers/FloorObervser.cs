@@ -21,7 +21,7 @@ namespace com.mortup.iso.observers {
 
             int tileIndex = level.data.GetFloor(x, y);
 
-            PrefabContainer tilePrefab = ResourceManager.GetTilePrefab(tileIndex);
+            PrefabContainer tilePrefab = ResourceManager.GetFloorPrefab(tileIndex);
 
             tilePrefab.gameObject.name = string.Format("Floor Tile [{0}, {1}]", x, y);
             tilePrefab.gameObject.transform.SetParent(level.transform);

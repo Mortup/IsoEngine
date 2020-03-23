@@ -42,7 +42,8 @@ namespace com.mortup.iso.world {
                     sortingOrder = level.transformer.WallSortingOrder(coords.x, coords.y, coords.z);
                     break;
                 case ElementType.Item:
-                    throw new System.NotImplementedException("No support for items yet.");
+                    transform.position = level.transformer.TileToWorld(new Vector2Int(coords.x, coords.y));
+                    sortingOrder = level.transformer.ItemSortingOrder(coords.x, coords.y);
                     break;
                 default:
                     Debug.LogError("Unknown element type.");

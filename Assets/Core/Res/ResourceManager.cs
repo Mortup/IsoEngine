@@ -13,7 +13,7 @@ namespace com.mortup.iso.resources {
                 return Path.Combine(Settings.basePath, "DefaultPrefabs/{0}");
             }
         }
-        private static string tilePath {
+        private static string floorPath {
             get {
                 return Path.Combine(Settings.basePath, "Sprites/Floor/{0}");
             }
@@ -28,15 +28,25 @@ namespace com.mortup.iso.resources {
                 return Path.Combine(Settings.basePath, "Sprites/Wall/{0}/Wall_00{0}_{1}");
             }
         }
+        private static string itemPrefabPath {
+            get {
+                return Path.Combine(Settings.basePath, "Sprites/Item/{0}/Item_00{0}");
+            }
+        }
+        private static string itemSpritePath {
+            get {
+                return Path.Combine(Settings.basePath, "Sprites/Item/{0}/Item_00{0}_{1}");
+            }
+        }
 
-        public static PrefabContainer GetTilePrefab(int index) {
-            string loadPath = string.Format(tilePath, index);
+        public static PrefabContainer GetFloorPrefab(int index) {
+            string loadPath = string.Format(floorPath, index);
 
             if (Resources.Load<Sprite>(loadPath) != null) {
                 PrefabContainer prefabContainer = new PrefabContainer(Resources.Load<GameObject>(string.Format(prefabPath, "Tile")));
-                prefabContainer.spriteRenderer.sprite = GetTileSprite(index);
+                prefabContainer.spriteRenderer.sprite = GetFloorSprite(index);
                 SingleOrientableSprite sos = (SingleOrientableSprite)prefabContainer.orientableSprite;
-                sos.sprite = GetTileSprite(index);
+                sos.sprite = GetFloorSprite(index);
                 return prefabContainer;
             }
             if (Resources.Load<GameObject>(loadPath) != null) {
@@ -70,8 +80,32 @@ namespace com.mortup.iso.resources {
             return null;
         }
 
-        public static Sprite GetTileSprite(int index) {
-            string loadPath = string.Format(tilePath, index);
+        public static PrefabContainer GetItemPrefab(int index, int side) {
+            string currentItemPrefabPath = string.Format(itemPrefabPath, index);
+            string currentItemSpritePath = string.Format(itemSpritePath, index, side);
+
+            if (Resources.Load<GameObject>(itemPrefabPath) != null) {
+                return new PrefabContainer(Resources.Load<GameObject>(currentItemSpritePath));
+            }
+            if (Resources.Load<Sprite>(currentItemSpritePath) != null) {
+                PrefabContainer prefabContainer = new PrefabContainer(Resources.Load<GameObject>(string.Format(prefabPath, "Item")));
+                prefabContainer.spriteRenderer.sprite = GetItemSprite(index, side);
+
+                RegularOrientableSprite itemOrientableSprite = prefabContainer.gameObject.GetComponent<RegularOrientableSprite>();
+                itemOrientableSprite.northSprite = GetItemSprite(index, 0);
+                itemOrientableSprite.westSprite = GetItemSprite(index, 1);
+                itemOrientableSprite.southSprite = GetItemSprite(index, 2);
+                itemOrientableSprite.eastSprite = GetItemSprite(index, 3);
+                
+                return prefabContainer;
+            }
+
+            Debug.LogErrorFormat("Couldn't find resource for item {0} with path {1}", index, currentItemSpritePath);
+            return null;
+        }
+
+        public static Sprite GetFloorSprite(int index) {
+            string loadPath = string.Format(floorPath, index);
 
             Sprite sprite = Resources.Load<Sprite>(loadPath);
             if (sprite != null) {
@@ -101,6 +135,23 @@ namespace com.mortup.iso.resources {
             }
 
             Debug.LogErrorFormat("Couldn't find sprite for wall {0}", index);
+            return null;
+        }
+
+        public static Sprite GetItemSprite(int index, int side) {
+            string loadPath = string.Format(itemSpritePath, index, side);
+
+            Sprite sprite = Resources.Load<Sprite>(loadPath);
+            if (sprite != null) {
+                return sprite;
+            }
+
+            GameObject go = Resources.Load<GameObject>(loadPath);
+            if (go != null && go.GetComponent<SpriteRenderer>() != null) {
+                return go.GetComponent<SpriteRenderer>().sprite;
+            }
+
+            Debug.LogErrorFormat("Couldn't find sprite for item {0}", index);
             return null;
         }
 

@@ -17,8 +17,8 @@ namespace com.mortup.city.gamemodes {
             base.Activate();
 
             tileIndex = (int)FloorIndex.FirstDesign;
-            regularSprite = ResourceManager.GetTileSprite(tileIndex);
-            removeSprite = ResourceManager.GetTileSprite((int)FloorIndex.New);
+            regularSprite = ResourceManager.GetFloorSprite(tileIndex);
+            removeSprite = ResourceManager.GetFloorSprite((int)FloorIndex.New);
         }
 
         public override Sprite GetCursorSprite(Vector2Int position) {

@@ -6,6 +6,7 @@ public class SpritePostProcessor : AssetPostprocessor
     private int PPU = Settings.PPU;
     private Vector2 tilePivot = Settings.TilePivot;
     public Vector2 wallPivot = Settings.WallPivot;
+    public Vector2 itemPivot = Settings.ItemPivot;
 
     void OnPreprocessTexture ()
 	{
@@ -26,6 +27,9 @@ public class SpritePostProcessor : AssetPostprocessor
         }
         if (assetPath.Contains("Wall")) {
             tis.spritePivot = wallPivot;
+        }
+        if (assetPath.Contains("Item")) {
+            tis.spritePivot = itemPivot;
         }
 
         textureImporter.SetTextureSettings(tis);
