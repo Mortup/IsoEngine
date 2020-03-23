@@ -20,9 +20,11 @@ namespace com.mortup.iso.observers {
         public void UpdateItem(int x, int y) {
             DestroyTile(x, y);
 
-            int itemIndex = level.data.GetItem(x, y);
+            Vector2Int itemData = level.data.GetItem(x, y);
+            int itemIndex = itemData[0];
+            int itemOrientation = itemData[1];
 
-            PrefabContainer itemPrefab = ResourceManager.GetItemPrefab(itemIndex, 0);
+            PrefabContainer itemPrefab = ResourceManager.GetItemPrefab(itemIndex, itemOrientation);
 
             itemPrefab.gameObject.name = string.Format("Item Tile [{0}, {1}]", x, y);
             itemPrefab.gameObject.transform.SetParent(level.transform);

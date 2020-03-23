@@ -15,6 +15,7 @@ namespace com.mortup.iso.world {
         private int[,] floorTiles;
         private int[,,] wallTiles;
         private int[,] items;
+        private short[,] itemOrientations;
 
         private List<FloorObserver> floorObservers;
         private List<WallObserver> wallObservers;
@@ -29,12 +30,11 @@ namespace com.mortup.iso.world {
             floorTiles = new int[width, height];
             wallTiles = new int[width + 1, height + 1, 2];
             items = new int[width, height];
+            itemOrientations = new short[width, height];
 
             floorObservers = new List<FloorObserver>();
             wallObservers = new List<WallObserver>();
             itemObservers = new List<ItemObserver>();
-
-            items[2, 4] = 1;
         }
 
         public int GetFloor(int x, int y) {
@@ -124,20 +124,21 @@ namespace com.mortup.iso.world {
             return IsFloorInBounds(coords);
         }
 
-        public int GetItem (int x, int y) {
-            return items[x, y];
+        public Vector2Int GetItem (int x, int y) {
+            return new Vector2Int(items[x, y], itemOrientations[x,y]);
         }
 
-        public int GetItem(Vector2Int coords) {
+        public Vector2Int GetItem(Vector2Int coords) {
             return GetItem(coords.x, coords.y);
         }
 
-        public void SetItem(int x, int y, int val) {
+        public void SetItem(int x, int y, int index, short orientation) {
             if (IsItemInBounds(new Vector2Int(x,y)) == false) {
                 return;
             }
 
-            items[x, y] = val;
+            items[x, y] = index;
+            itemOrientations[x, y] = orientation;
 
             foreach (ItemObserver observer in itemObservers) {
                 observer.UpdateItem(x, y);

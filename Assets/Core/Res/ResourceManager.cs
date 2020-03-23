@@ -96,6 +96,7 @@ namespace com.mortup.iso.resources {
                 itemOrientableSprite.westSprite = GetItemSprite(index, 1);
                 itemOrientableSprite.southSprite = GetItemSprite(index, 2);
                 itemOrientableSprite.eastSprite = GetItemSprite(index, 3);
+                itemOrientableSprite.localOrientation = (Transformer.Orientation)side;
                 
                 return prefabContainer;
             }
