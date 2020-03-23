@@ -1,18 +1,21 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class ModeHighLighter : MonoBehaviour
-{
-    [SerializeField] private CursorMode cursorMode;
-    [SerializeField] private int modeToHighlight;
+namespace com.mortup.iso.demo.citybuilder {
 
-    Image image;
+    public class ModeHighLighter : MonoBehaviour {
+        [SerializeField] private CursorMode cursorMode;
+        [SerializeField] private int modeToHighlight;
 
-    private void Awake() {
-        image = GetComponent<Image>();
+        Image image;
+
+        private void Awake() {
+            image = GetComponent<Image>();
+        }
+
+        private void Update() {
+            image.color = cursorMode.GetCurrentMode() == modeToHighlight ? Color.white : Color.clear;
+        }
     }
 
-    private void Update() {
-        image.color = cursorMode.GetCurrentMode() == modeToHighlight ? Color.white : Color.clear;
-    }
 }

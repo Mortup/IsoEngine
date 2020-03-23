@@ -4,7 +4,7 @@ using UnityEngine;
 using com.mortup.iso.serialization;
 using com.mortup.iso.world;
 
-namespace com.mortup.citybuilder {
+namespace com.mortup.iso.demo.citybuilder {
 
     public class MapGenerator : MonoBehaviour, ILevelSerializer {
 

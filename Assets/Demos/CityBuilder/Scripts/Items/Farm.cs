@@ -3,39 +3,43 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Farm : MonoBehaviour {
+namespace com.mortup.iso.demo.citybuilder {
 
-    [SerializeField] private GameObject iconPrefab;
-    [SerializeField] private Transform iconSpawnPoint;
-    [SerializeField] private float foodPeriod;
+    public class Farm : MonoBehaviour {
 
-    private SpriteRenderer spriteRenderer;
-    private float remainingTime;
+        [SerializeField] private GameObject iconPrefab;
+        [SerializeField] private Transform iconSpawnPoint;
+        [SerializeField] private float foodPeriod;
 
-    private void Awake() {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-    }
+        private SpriteRenderer spriteRenderer;
+        private float remainingTime;
 
-    private void Start() {
-        remainingTime = Random.Range(0f, foodPeriod);
-    }
-
-    private void Update() {
-        if (remainingTime <= 0f) {
-            AddFood();
-        }
-        else {
-            remainingTime -= Time.deltaTime;
+        private void Awake() {
+            spriteRenderer = GetComponent<SpriteRenderer>();
         }
 
-        spriteRenderer.color = Color.Lerp(spriteRenderer.color, Color.white, Time.deltaTime * 2f);
-    }
+        private void Start() {
+            remainingTime = Random.Range(0f, foodPeriod);
+        }
 
-    private void AddFood() {
-        remainingTime = foodPeriod;
-        CityBuilderManager.food += 1;
-        Instantiate(iconPrefab, iconSpawnPoint.position, Quaternion.identity, transform);
-        spriteRenderer.color = Color.green;
+        private void Update() {
+            if (remainingTime <= 0f) {
+                AddFood();
+            }
+            else {
+                remainingTime -= Time.deltaTime;
+            }
+
+            spriteRenderer.color = Color.Lerp(spriteRenderer.color, Color.white, Time.deltaTime * 2f);
+        }
+
+        private void AddFood() {
+            remainingTime = foodPeriod;
+            CityBuilderManager.food += 1;
+            Instantiate(iconPrefab, iconSpawnPoint.position, Quaternion.identity, transform);
+            spriteRenderer.color = Color.green;
+        }
+
     }
 
 }

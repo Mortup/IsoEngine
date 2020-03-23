@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
 using TMPro;
 
-public class FoodText : MonoBehaviour
-{
-    [SerializeField] TMP_Text text;
+namespace com.mortup.iso.demo.citybuilder {
 
-    void Update()
-    {
-        text.text = CityBuilderManager.food.ToString();
+    public class FoodText : MonoBehaviour {
+        [SerializeField] TMP_Text text;
+
+        void Update() {
+            text.text = CityBuilderManager.food.ToString();
+        }
     }
+
 }
