@@ -8,10 +8,19 @@ using com.mortup.iso.world;
 namespace com.mortup.iso.serialization {
     public class LocalSerializer : MonoBehaviour, ILevelSerializer {
 
+        [Tooltip ("Used when you are testing serialization changes.")]
+        [SerializeField] private bool forceCreateNewLevelOnLoad;
+
         private const string basePath = "Saves";    // TODO: Path Manager should take care of this.
         private const string fileExtension = ".bin";
 
         LevelData ILevelSerializer.LoadLevel(string levelName) {
+            Debug.LogFormat("Loading level {0}...", levelName);
+
+            if (forceCreateNewLevelOnLoad) {
+                return new LevelData(10, 10, levelName);
+            }
+
             if (FileExists(levelName) == false) {
                 Debug.LogError(string.Format("Level {0} could not be found. Creating a default one.", levelName));
                 LevelData levelData = new LevelData(10, 10);

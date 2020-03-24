@@ -21,9 +21,9 @@ namespace com.mortup.iso.world {
         private List<WallObserver> wallObservers;
         private List<ItemObserver> itemObservers;
 
-        public LevelData(int width, int height) {
+        public LevelData(int width, int height, string name) {
             id = -1;
-            name = "Default Level";
+            this.name = name;
             owner = "Gonzalito del Flow";
             this.width = width;
             this.height = height;
@@ -36,6 +36,8 @@ namespace com.mortup.iso.world {
             wallObservers = new List<WallObserver>();
             itemObservers = new List<ItemObserver>();
         }
+
+        public LevelData(int width, int height) : this(width, height, "Default Level") {}
 
         public int GetFloor(int x, int y) {
             return floorTiles[x, y];

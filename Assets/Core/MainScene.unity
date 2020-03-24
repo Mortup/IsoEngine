@@ -2438,9 +2438,8 @@ Transform:
 --- !u!114 &1783360211
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 8415934962457815465, guid: 4a5f6529cb759794daf35d53af85e38b,
-    type: 3}
-  m_PrefabInstance: {fileID: 8415934962026234746}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1783360208}
   m_Enabled: 1
@@ -2448,6 +2447,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cc44ad8cb475fa4eb3176e39c8ed963, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  forceCreateNewLevelOnLoad: 0
 --- !u!1 &1849475397
 GameObject:
   m_ObjectHideFlags: 0
@@ -2889,5 +2889,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Level
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8415934962457815467, guid: 4a5f6529cb759794daf35d53af85e38b,
+        type: 3}
+      propertyPath: loadOnStart
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8415934962457815467, guid: 4a5f6529cb759794daf35d53af85e38b,
+        type: 3}
+      propertyPath: levelName
+      value: IsoTiledTest
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 4a5f6529cb759794daf35d53af85e38b, type: 3}
