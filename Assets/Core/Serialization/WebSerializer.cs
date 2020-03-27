@@ -7,7 +7,16 @@ namespace com.mortup.iso.serialization {
 
     public class WebSerializer : MonoBehaviour, ILevelSerializer {
 
+        [SerializeField] private bool forceCreateNewLevelOnLoad;
+
         LevelData ILevelSerializer.LoadLevel(string levelName) {
+            if (forceCreateNewLevelOnLoad) {
+                LevelData newLevelData = new LevelData(10, 10, levelName);
+                newLevelData.owner = "1";
+                newLevelData.id = 1;
+                return newLevelData;
+            }
+
             string jsonResponse = PersistentAPI.GetRoom(levelName);
     
             SerializableLevelData webLevelData = JsonUtility.FromJson<SerializableLevelData>(jsonResponse);

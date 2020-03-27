@@ -18,7 +18,9 @@ namespace com.mortup.iso.serialization {
             Debug.LogFormat("Loading level {0}...", levelName);
 
             if (forceCreateNewLevelOnLoad) {
-                return new LevelData(10, 10, levelName);
+                LevelData levelData = new LevelData(10, 10, levelName);
+                levelData.id = 42;
+                return levelData;
             }
 
             if (FileExists(levelName) == false) {
