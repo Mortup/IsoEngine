@@ -1,10 +1,14 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
 
-using com.mortup.iso.world;
+using UnityEngine;
 
 namespace com.mortup.iso.observers {
 
     public abstract class OrientableSprite : MonoBehaviour {
+
+        private static List<OrientableSprite> instances;
+
+        public static List<OrientableSprite> GetInstances() { return instances; }
 
         [SerializeField] private Level level;
 
@@ -19,11 +23,22 @@ namespace com.mortup.iso.observers {
         }
 
         public void Init(Level level) {
+            if (instances == null) {
+                instances = new List<OrientableSprite>();
+            }
+            instances.Add(this);
+
             this.level = level;
         }
 
         void Start() {
             UpdateSprite();
+        }
+
+        private void OnDestroy() {
+            if (instances != null) {
+                instances.Remove(this);
+            }
         }
 
         public Level GetLevel() {

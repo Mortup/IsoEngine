@@ -222,14 +222,14 @@ namespace com.mortup.iso {
 
             if (oldOrientation != orientation) {
                 // All IsometricTransforms should be updated regardless if they have an observer or not.
-                IsometricTransform[] transforms = GameObject.FindObjectsOfType<IsometricTransform>();
+                IsometricTransform[] transforms = IsometricTransform.GetInstances().ToArray();
                 foreach (IsometricTransform t in transforms) {
                     if (t.GetLevel() == level) {
                         t.UpdatePosition();
                     }
                 }
 
-                OrientableSprite[] orientableSprites = GameObject.FindObjectsOfType<OrientableSprite>();
+                OrientableSprite[] orientableSprites = OrientableSprite.GetInstances().ToArray();
                 foreach (OrientableSprite os in orientableSprites) {
                     if (os.GetLevel() == level) {
                         os.UpdateSprite();

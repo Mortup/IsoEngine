@@ -1,12 +1,20 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+
+using UnityEngine;
 
 namespace com.mortup.iso.world {
 
     public class IsometricTransform : MonoBehaviour {
 
+        private static List<IsometricTransform> instances;
+
+        public static List<IsometricTransform> GetInstances() { return instances; }
+
         [SerializeField] private Level level;
         [SerializeField] private Vector3Int coordinates;
         [SerializeField] private ElementType elementType;
+
+        private SpriteRenderer spriteRenderer;
 
         public Vector3Int coords {
             get {
@@ -18,7 +26,16 @@ namespace com.mortup.iso.world {
             }
         }
 
+        private void Awake() {
+            spriteRenderer = GetComponent<SpriteRenderer>();
+        }
+
         public void Init(Level level, ElementType elementType) {
+            if (instances == null) {
+                instances = new List<IsometricTransform>();
+            }
+            instances.Add(this);
+
             this.level = level;
             this.elementType = elementType;
             UpdatePosition();
@@ -29,7 +46,6 @@ namespace com.mortup.iso.world {
         }
 
         public void UpdatePosition() {
-            SpriteRenderer sr = GetComponent<SpriteRenderer>();
             int sortingOrder = -1;
 
             switch (elementType) {
@@ -50,14 +66,20 @@ namespace com.mortup.iso.world {
                     break;
             }
 
-            if (sr != null) {
-                sr.sortingOrder = sortingOrder;
+            if (spriteRenderer != null) {
+                spriteRenderer.sortingOrder = sortingOrder;
             }
         }
 
         private void OnValidate() {
             if (level != null) {
                 UpdatePosition();
+            }
+        }
+
+        private void OnDestroy() {
+            if (instances != null) {
+                instances.Remove(this);
             }
         }
 
