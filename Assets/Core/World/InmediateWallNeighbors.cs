@@ -101,6 +101,19 @@ namespace com.mortup.iso.world {
             BottomLeft = BottomRight;
             BottomRight = buff;
         }
+
+        public string GetHashForCaching() {
+            return GetNeighborEmptyString(Top) + 
+                GetNeighborEmptyString(TopLeft) + 
+                GetNeighborEmptyString(TopRight) +
+                GetNeighborEmptyString(Bottom) + 
+                GetNeighborEmptyString(BottomLeft) + 
+                GetNeighborEmptyString(BottomRight);
+        }
+
+        private string GetNeighborEmptyString(int val) {
+            return val == (int)WallIndex.Empty ? "0" : "1";
+        }
     }
 
 }

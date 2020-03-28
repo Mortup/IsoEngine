@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+
+using UnityEngine;
 
 using com.mortup.iso.world;
 
@@ -17,8 +19,29 @@ namespace com.mortup.iso.resources {
         private static Vector2Int RightBottom = new Vector2Int(37, 16);
         private static Vector2Int BackTop = new Vector2Int(33, 129);
 
+        private static Dictionary<string, Sprite> cachedSprites;
+
         public static Sprite DrawSpriteBorders(Sprite spr, int rotatedZ, InmediateWallNeighbors neighbors, bool isCropped) {
-            Texture2D tex = new Texture2D(spr.texture.width, spr.texture.height, spr.texture.format, false, false);
+
+            string cacheHash = neighbors.GetHashForCaching() + spr.name + rotatedZ.ToString() + (isCropped ? "0" : "1");
+
+            if (cachedSprites == null) {
+                cachedSprites = new Dictionary<string, Sprite>();
+            }
+
+            if (cachedSprites.ContainsKey(cacheHash)) {
+                return cachedSprites[cacheHash];
+            }
+            else {
+                Sprite result = DrawSpriteBordersImpl(spr, rotatedZ, neighbors, isCropped);
+                cachedSprites.Add(cacheHash, result);
+                return result;
+            }
+
+        }
+
+        public static Sprite DrawSpriteBordersImpl(Sprite spr, int rotatedZ, InmediateWallNeighbors neighbors, bool isCropped) {
+                Texture2D tex = new Texture2D(spr.texture.width, spr.texture.height, spr.texture.format, false, false);
             tex.filterMode = FilterMode.Point;
             tex.wrapMode = TextureWrapMode.Clamp;
 
