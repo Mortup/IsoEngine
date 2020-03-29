@@ -7,9 +7,6 @@ using com.mortup.iso.world;
 namespace com.mortup.iso {
 
     public class Level : MonoBehaviour {
-        public FloorObserver floorObserver { get; private set; }
-        public WallObserver wallObserver { get; private set; }
-        public ItemObserver itemObserver { get; private set; }
         public Transformer transformer { get; private set; }
         public LevelData data { get; private set; }
 
@@ -27,6 +24,10 @@ namespace com.mortup.iso {
                 levelSerializer = gameObject.AddComponent<NullRoomSerializer>();
             }
 
+            foreach(IsoMonoBehaviour isoMonoBehaviour in GetComponents<IsoMonoBehaviour>()) {
+                isoMonoBehaviour.OnInit(this);
+            }
+
             if (loadOnStart) {
                 LoadLevel();
             }
@@ -35,9 +36,10 @@ namespace com.mortup.iso {
         public void LoadLevel() {
             data = levelSerializer.LoadLevel(levelName);
 
-            floorObserver = new FloorObserver(this);
-            wallObserver = new WallObserver(this);
-            itemObserver = new ItemObserver(this);
+            foreach (IsoMonoBehaviour isoMonoBehaviour in GetComponents<IsoMonoBehaviour>()) {
+                isoMonoBehaviour.OnLevelLoad(this);
+            }
+
         }
 
         private void Update() {

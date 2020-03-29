@@ -5,11 +5,12 @@ using com.mortup.iso.world;
 
 namespace com.mortup.iso.observers {
 
-    public class FloorObserver {
+    public class FloorObserver : IsoMonoBehaviour {
+
         private Level level;
         private PrefabContainer[,] tilePrefabs;
 
-        public FloorObserver(Level level) {
+        public override void OnLevelLoad(Level level) {
             this.level = level;
             tilePrefabs = new PrefabContainer[level.data.width, level.data.height];
             UpdateAllTiles();

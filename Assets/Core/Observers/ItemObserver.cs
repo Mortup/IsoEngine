@@ -5,12 +5,12 @@ using com.mortup.iso.world;
 
 namespace com.mortup.iso.observers {
 
-    public class ItemObserver {
+    public class ItemObserver :IsoMonoBehaviour {
 
         private Level level;
         PrefabContainer[,] itemPrefabs;
 
-        public ItemObserver(Level level) {
+        public override void OnLevelLoad(Level level) {
             this.level = level;
             itemPrefabs = new PrefabContainer[level.data.width, level.data.height];
             UpdateAllItems();
