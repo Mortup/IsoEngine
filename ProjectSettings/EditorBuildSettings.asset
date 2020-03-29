@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Demos/CityBuilder/Main.unity
-    guid: 69960de7402074048b3dc79637514d4a
+    path: Assets/Mortuolis/Scenes/Game.unity
+    guid: 09982bbcff66f6944be08bd3b6e5d0db
   m_configObjects: {}
