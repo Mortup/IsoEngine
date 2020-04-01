@@ -3,24 +3,27 @@ using UnityEngine.UI;
 
 using TMPro;
 
-public class ChatInputField : MonoBehaviour
-{
-    [SerializeField] private ChatInterface chatInterface;
+namespace com.mortup.city.multiplayer.chat {
 
-    private TMP_InputField inputField;
-    private bool wasFocused = false;
+    public class ChatInputField : MonoBehaviour {
+        [SerializeField] private ChatInterface chatInterface;
 
-    private void Awake() {
-        inputField = GetComponent<TMP_InputField>();
-    }
+        private TMP_InputField inputField;
+        private bool wasFocused = false;
 
-    private void Update() {
-        if (wasFocused && Input.GetKeyDown(KeyCode.Return)) {
-            chatInterface.SendChatMessage(inputField.text);
-            inputField.text = "";
-            inputField.ActivateInputField();
+        private void Awake() {
+            inputField = GetComponent<TMP_InputField>();
         }
 
-        wasFocused = inputField.isFocused;
+        private void Update() {
+            if (wasFocused && Input.GetKeyDown(KeyCode.Return)) {
+                chatInterface.SendChatMessage(inputField.text);
+                inputField.text = "";
+                inputField.ActivateInputField();
+            }
+
+            wasFocused = inputField.isFocused;
+        }
     }
+
 }

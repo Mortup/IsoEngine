@@ -30,7 +30,7 @@ namespace com.mortup.city.multiplayer {
         public override void OnJoinedRoom() {
             Debug.Log("Joined room!");
             level.LoadLevel();
-            localPlayer = PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(0f, 0f, 0f), Quaternion.identity, 0).GetComponent<CharacterMovement>();
+            localPlayer = PhotonNetwork.Instantiate(playerPrefab.name, level.transformer.TileToWorld(0,0), Quaternion.identity, 0).GetComponent<CharacterMovement>();
         }
 
         public override void OnPlayerEnteredRoom(Player newPlayer) {

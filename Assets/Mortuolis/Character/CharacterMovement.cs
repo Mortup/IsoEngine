@@ -5,38 +5,74 @@ using Photon.Pun;
 using Photon.Realtime;
 
 using com.mortup.iso;
+using com.mortup.iso.pathfinding;
+using com.mortup.iso.world;
+using com.mortup.city.gamemodes;
 
 public class CharacterMovement : MonoBehaviourPun, IPunObservable
 {
     [SerializeField] private float speed;
 
     private Level level;
-    private Vector2 target;
+    private Vector2Int[] currentPath;
+    private int currentPathPointIndex;
 
     private void Start() {
         level = FindObjectOfType<Level>();
 
         if (photonView.IsMine == true || PhotonNetwork.IsConnected == false) {
-            target = transform.position;
+            currentPath = new Vector2Int[0];
+            currentPathPointIndex = 0;
         }
     }
 
     private void Update() {
-        if ((target - (Vector2)transform.position).magnitude > 0.05f) {
-            transform.position = transform.position + (Vector3)(target - (Vector2)transform.position).normalized * Time.deltaTime * speed;
-        }
+        HandleMovement();
+        HandleNewTarget();
+    }
 
+    private void HandleMovement() {
+        if (currentPath.Length == 0)
+            return;
+
+        Vector2 currentTarget = level.transformer.TileToWorld(currentPath[currentPathPointIndex]);
+
+        bool isCloseToCurrentTarget = (currentTarget - (Vector2)transform.position).magnitude < 0.05f;
+
+        if (isCloseToCurrentTarget) {
+            UpdateCurrentTarget();
+        }
+        else {
+            transform.position = transform.position + (Vector3)(currentTarget - (Vector2)transform.position).normalized * Time.deltaTime * speed;
+        }
+    }
+
+    private void HandleNewTarget() {
         if (PhotonNetwork.IsConnected == true && photonView.IsMine == false)
             return;
 
-        // Input handling.
-        // Don't move if clicking on UI elements.
         if (EventSystem.current.IsPointerOverGameObject())
             return;
 
+        if (FindObjectOfType<LivingMode>() != null && FindObjectOfType<LivingMode>().enabled == false) {
+            return;
+        }
+
         if (Input.GetMouseButtonDown(0)) {
+            Vector2Int startCoords = level.transformer.WorldToTile(transform.position + Vector3.right * 0.5f);
             Vector2Int targetTile = level.transformer.ScreenToTile(Input.mousePosition);
-            target = level.transformer.TileToWorld(targetTile);
+            currentPath = PathCalculator.FindPath(level, startCoords, targetTile).ToArray();
+            currentPathPointIndex = 0;
+        }
+    }
+
+    private void UpdateCurrentTarget() {
+        if (currentPath.Length == 0)
+            return;
+
+        if (currentPathPointIndex < currentPath.Length - 1) {
+            currentPathPointIndex++;
+            Vector2Int targetCoords = currentPath[currentPathPointIndex];
         }
     }
 
@@ -52,11 +88,13 @@ public class CharacterMovement : MonoBehaviourPun, IPunObservable
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+        /**
         if (stream.IsWriting) {
-            stream.SendNext(target);
+            stream.SendNext(currentTarget);
         }
         else {
-            target = (Vector2)stream.ReceiveNext();
+            currentTarget = (Vector2)stream.ReceiveNext();
         }
+    **/
     }
 }
