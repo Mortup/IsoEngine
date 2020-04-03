@@ -49,7 +49,7 @@ namespace com.mortup.iso.pathfinding {
                 closedSet.Add(current);
                 openSet.Remove(current);
 
-                foreach (Vector2Int neighbor in GetNeighbors(level, current)) {
+                foreach (Vector2Int neighbor in GetNeighbors(level, current, true)) {
                     float tentativeGScore = gScores[current] + DScore(current, neighbor);
                     if (tentativeGScore < gScores[neighbor]) {
                         cameFrom[neighbor] = current;
@@ -81,25 +81,26 @@ namespace com.mortup.iso.pathfinding {
             return 1f;
         }
 
-        private static List<Vector2Int> GetNeighbors(Level level, Vector2Int center) {
+        private static List<Vector2Int> GetNeighbors(Level level, Vector2Int center, bool includeDiagonals) {
             List<Vector2Int> result = new List<Vector2Int>();
 
-            Vector2Int topNeighbor = center + Vector2Int.up;
-            Vector2Int bottomNeighbor = center + Vector2Int.down;
-            Vector2Int leftNeighbor = center + Vector2Int.left;
-            Vector2Int rightNeighbor = center + Vector2Int.right;
+            List<Vector2Int> neighbors = new List<Vector2Int>();
+            neighbors.Add(center + Vector2Int.up);
+            neighbors.Add(center + Vector2Int.down);
+            neighbors.Add(center + Vector2Int.left);
+            neighbors.Add(center + Vector2Int.right);
 
-            if (IsWalkable(level, bottomNeighbor)) {
-                result.Add(bottomNeighbor);
+            if (includeDiagonals) {
+                neighbors.Add(center + Vector2Int.up + Vector2Int.left);
+                neighbors.Add(center + Vector2Int.up + Vector2Int.right);
+                neighbors.Add(center + Vector2Int.down + Vector2Int.left);
+                neighbors.Add(center + Vector2Int.down + Vector2Int.right);
             }
-            if (IsWalkable(level, topNeighbor)) {
-                result.Add(topNeighbor);
-            }
-            if (IsWalkable(level, leftNeighbor)) {
-                result.Add(leftNeighbor);
-            }
-            if (IsWalkable(level, rightNeighbor)) {
-                result.Add(rightNeighbor);
+
+            foreach (Vector2Int neighbor in neighbors) {
+                if (IsWalkable(level, neighbor)) {
+                    result.Add(neighbor);
+                }
             }
 
             return result;
