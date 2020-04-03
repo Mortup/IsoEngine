@@ -35,7 +35,7 @@ namespace com.mortup.city.multiplayer {
 
         public override void OnPlayerEnteredRoom(Player newPlayer) {
             Debug.LogFormat("{0} entered the room. Requesting position.", newPlayer.NickName);
-            localPlayer.RequestPosition(newPlayer);
+            localPlayer.RequestInitialInfo(newPlayer);
         }
 
         public override void OnJoinRoomFailed(short returnCode, string message) {

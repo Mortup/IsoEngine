@@ -2737,8 +2737,8 @@ MonoBehaviour:
   connectButton: {fileID: 0}
   progressLabel: {fileID: 0}
   connectOnStart: 1
-  defaultEmail: g.uribemontero@gmail.com
-  defaultPassword: admin
+  defaultEmail: frocoa@gmail.com
+  defaultPassword: frocoa
 --- !u!4 &1377377042
 Transform:
   m_ObjectHideFlags: 0

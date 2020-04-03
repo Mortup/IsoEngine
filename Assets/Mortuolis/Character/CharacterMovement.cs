@@ -9,7 +9,7 @@ using com.mortup.iso.pathfinding;
 using com.mortup.iso.world;
 using com.mortup.city.gamemodes;
 
-public class CharacterMovement : MonoBehaviourPun, IPunObservable
+public class CharacterMovement : MonoBehaviourPun
 {
     [SerializeField] private float speed;
 
@@ -17,13 +17,11 @@ public class CharacterMovement : MonoBehaviourPun, IPunObservable
     private Vector2Int[] currentPath;
     private int currentPathPointIndex;
 
-    private void Start() {
+    private void Awake() {
         level = FindObjectOfType<Level>();
 
-        if (photonView.IsMine == true || PhotonNetwork.IsConnected == false) {
-            currentPath = new Vector2Int[0];
-            currentPathPointIndex = 0;
-        }
+        currentPath = new Vector2Int[0];
+        currentPathPointIndex = 0;
     }
 
     private void Update() {
@@ -61,8 +59,8 @@ public class CharacterMovement : MonoBehaviourPun, IPunObservable
         if (Input.GetMouseButtonDown(0)) {
             Vector2Int startCoords = level.transformer.WorldToTile(transform.position + Vector3.right * 0.5f);
             Vector2Int targetTile = level.transformer.ScreenToTile(Input.mousePosition);
-            currentPath = PathCalculator.FindPath(level, startCoords, targetTile).ToArray();
-            currentPathPointIndex = 0;
+            Vector2Int[] newPath = PathCalculator.FindPath(level, startCoords, targetTile).ToArray();
+            photonView.RPC("SetNewPath", RpcTarget.AllViaServer, splitArray(newPath, true), splitArray(newPath, false));
         }
     }
 
@@ -76,25 +74,47 @@ public class CharacterMovement : MonoBehaviourPun, IPunObservable
         }
     }
 
-    public void RequestPosition(Player requester) {
-        Debug.LogFormat("Requesting position. Sending {0}", (Vector2)transform.position);
-        photonView.RPC("SetPosition", requester, (Vector2)transform.position);
+    public void RequestInitialInfo(Player requester) {
+        Debug.LogFormat("Requesting initial info.");
+        photonView.RPC("SetInitialInfo", requester, (Vector2)transform.position, currentPathPointIndex, splitArray(currentPath, true), splitArray(currentPath, false));
     }
 
     [PunRPC]
-    private void SetPosition(Vector2 position) {
-        Debug.LogFormat("Received position {0}", position);
-        transform.position = position;
+    private void SetNewPath(int[] pathX, int[] pathY) {
+        currentPathPointIndex = 0;
+        currentPath = joinArray(pathX, pathY);
     }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
-        /**
-        if (stream.IsWriting) {
-            stream.SendNext(currentTarget);
+    [PunRPC]
+    private void SetInitialInfo(Vector2 position, int pathPos, int[] pathX, int[] pathY) {
+        Debug.LogFormat("Received position {0}", position);
+        transform.position = position;
+        currentPathPointIndex = pathPos;
+        currentPath = joinArray(pathX, pathY);
+
+        Debug.Log("Setting path length: " + currentPath.Length);
+    }
+
+    private int[] splitArray(Vector2Int[] arr, bool sideX) {
+        int[] result = new int[arr.Length];
+
+        for (int i = 0; i < result.Length; i++) {
+            result[i] = sideX ? arr[i].x : arr[i].y;
         }
-        else {
-            currentTarget = (Vector2)stream.ReceiveNext();
+
+        return result;
+    }
+
+    private Vector2Int[] joinArray(int[] x, int[] y) {
+        if (x.Length != y.Length) {
+            Debug.LogError("Cannot join arrays of different sizes.");
         }
-    **/
+
+        Vector2Int[] result = new Vector2Int[x.Length];
+        for (int i = 0; i < result.Length; i++) {
+            result[i] = new Vector2Int(x[i], y[i]);
+        }
+
+        return result;
     }
 }
