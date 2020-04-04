@@ -3,8 +3,8 @@
 namespace com.mortup.iso.serialization {
 
     public interface ILevelSerializer {
-        LevelData LoadLevel(string levelName);
-        void SaveLevel(LevelData levelData);
+        ILevelData LoadLevel(string levelName);
+        void SaveLevel(ILevelData levelData);
     }
 
 }

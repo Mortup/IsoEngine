@@ -46,6 +46,14 @@ namespace com.mortup.city.multiplayer.login {
             ShowProgressMessage("Connecting...");
             SetConnectButtonState(false);
 
+            if (PersistentAPI.PingServer()) {
+                Debug.Log("Ping successful.");
+            }
+            else {
+                ShowProgressMessage("Could not connect to the server.");
+                return;
+            }
+
             PhotonNetwork.GameVersion = gameVersion;
 
             AuthenticationValues authValues = new AuthenticationValues();

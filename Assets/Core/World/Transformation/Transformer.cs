@@ -7,13 +7,12 @@ namespace com.mortup.iso {
 
     public class Transformer {
 
-        private Level level;
+        //private Level level;
         private Transform levelTransform;
         private Orientation orientation;
 
-        public Transformer(Level level) {
-            this.level = level;
-            levelTransform = level.gameObject.transform;
+        public Transformer(Transform levelTransform) {
+            this.levelTransform = levelTransform;
             orientation = Orientation.NORTH;
         }
 
@@ -194,17 +193,17 @@ namespace com.mortup.iso {
 
         // Sorting Order
         public int TileSortingOrder(int x, int y) {
-            Vector2 localPos = level.transformer.TileToLocal(x, y);
+            Vector2 localPos = TileToLocal(x, y);
             return Mathf.RoundToInt(localPos.y * 1000 + localPos.x * 10) * -1;
         }
 
         public int WallSortingOrder(int x, int y, int z) {
-            Vector2 localPos = level.transformer.WallToLocal(x, y, z);
+            Vector2 localPos = WallToLocal(x, y, z);
             return Mathf.RoundToInt(localPos.y * 1000 + localPos.x * 10) * -1;
         }
 
         public int ItemSortingOrder(int x, int y) {
-            Vector2 localPos = level.transformer.TileToLocal(x, y);
+            Vector2 localPos = TileToLocal(x, y);
             return Mathf.RoundToInt(localPos.y * 1000 + localPos.x * 10) * -1;
         }
 
@@ -224,14 +223,14 @@ namespace com.mortup.iso {
                 // All IsometricTransforms should be updated regardless if they have an observer or not.
                 IsometricTransform[] transforms = IsometricTransform.GetInstances().ToArray();
                 foreach (IsometricTransform t in transforms) {
-                    if (t.GetLevel() == level) {
+                    if (t.GetLevel().transform == levelTransform) {
                         t.UpdatePosition();
                     }
                 }
 
                 OrientableSprite[] orientableSprites = OrientableSprite.GetInstances().ToArray();
                 foreach (OrientableSprite os in orientableSprites) {
-                    if (os.GetLevel() == level) {
+                    if (os.GetLevel().transform == levelTransform) {
                         os.UpdateSprite();
                     }
                 }

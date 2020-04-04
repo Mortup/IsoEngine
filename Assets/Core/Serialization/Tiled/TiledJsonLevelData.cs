@@ -21,12 +21,12 @@ namespace com.mortup.iso.serialization.tiled {
         public string version;
         public int width;
 
-        public TiledJsonLevelData(LevelData modified, TiledJsonLevelData original) {
+        public TiledJsonLevelData(ILevelData modified, TiledJsonLevelData original) {
             throw new System.NotImplementedException("Tiled Json Data can't merge levels yet.");
         }
 
-        public LevelData ToLevelData() {
-            LevelData levelData = new LevelData(width, height);
+        public ILevelData ToLevelData() {
+            ILevelData levelData = new LevelData(width, height);
 
             TiledJsonLayer floorLayer = GetFloorLayer();
             for (int x = 0; x < width; x++) {

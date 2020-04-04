@@ -13,8 +13,8 @@ namespace com.mortup.iso.demo.citybuilder {
         [SerializeField] private int height;
 
 
-        public LevelData LoadLevel(string levelName) {
-            LevelData levelData = new LevelData(width, height);
+        public ILevelData LoadLevel(string levelName) {
+            ILevelData levelData = new LevelData(width, height);
 
             for (int x = 0; x < width; x++) {
                 for (int y = 0; y < height; y++) {
@@ -30,7 +30,7 @@ namespace com.mortup.iso.demo.citybuilder {
             return levelData;
         }
 
-        public void SaveLevel(LevelData levelData) {
+        public void SaveLevel(ILevelData levelData) {
             throw new System.NotImplementedException();
         }
 

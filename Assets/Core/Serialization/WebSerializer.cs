@@ -9,9 +9,9 @@ namespace com.mortup.iso.serialization {
 
         [SerializeField] private bool forceCreateNewLevelOnLoad;
 
-        LevelData ILevelSerializer.LoadLevel(string levelName) {
+        ILevelData ILevelSerializer.LoadLevel(string levelName) {
             if (forceCreateNewLevelOnLoad) {
-                LevelData newLevelData = new LevelData(10, 10, levelName);
+                ILevelData newLevelData = new LevelData(10, 10, levelName);
                 newLevelData.owner = "1";
                 newLevelData.id = 1;
                 return newLevelData;
@@ -20,12 +20,12 @@ namespace com.mortup.iso.serialization {
             string jsonResponse = PersistentAPI.GetRoom(levelName);
     
             SerializableLevelData webLevelData = JsonUtility.FromJson<SerializableLevelData>(jsonResponse);
-            LevelData levelData = webLevelData.ToLevelData();
+            ILevelData levelData = webLevelData.ToLevelData();
 
             return levelData;
         }
 
-        void ILevelSerializer.SaveLevel(LevelData levelData) {
+        void ILevelSerializer.SaveLevel(ILevelData levelData) {
             SerializableLevelData webLevelData = new SerializableLevelData(levelData);
             PersistentAPI.SaveRoom(webLevelData);
             Debug.Log("Saving room");

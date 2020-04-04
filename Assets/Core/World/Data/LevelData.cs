@@ -5,12 +5,12 @@ using com.mortup.iso.observers;
 
 namespace com.mortup.iso.world {
 
-    public class LevelData {
-        public int id;
-        public string name;
-        public string owner;
-        public int width;
-        public int height;
+    public class LevelData : ILevelData {
+        public int id { get; set; }
+        public string name { get; set; }
+        public string owner { get; set; }
+        public int width { get; set; }
+        public int height { get; set; }
 
         private int[,] floorTiles;
         private int[,,] wallTiles;

@@ -12,11 +12,11 @@ namespace com.mortup.iso.serialization.tiled {
 
         // TODO: To save we should create a dictionary of leveldata:tiledjsonleveldata
 
-        public LevelData LoadLevel(string levelName) {
+        public ILevelData LoadLevel(string levelName) {
             TextAsset levelJson = Resources.Load<TextAsset>(Path.Combine(basePath, levelName));
             if (levelJson == null) {
                 Debug.LogError(string.Format("Level {0} could not be found. Creating a default one.", levelName));
-                LevelData levelData = new LevelData(10, 10);
+                ILevelData levelData = new LevelData(10, 10);
                 levelData.name = levelName;
 
                 return levelData;
@@ -26,7 +26,7 @@ namespace com.mortup.iso.serialization.tiled {
             return tiledData.ToLevelData();
         }
 
-        public void SaveLevel(LevelData levelData) {
+        public void SaveLevel(ILevelData levelData) {
             throw new System.NotImplementedException("Tiled Serializer does not support saving yet.");
         }
     }

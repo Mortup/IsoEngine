@@ -15,6 +15,19 @@ namespace com.mortup.city.persistence {
             authToken = "Token " + token;
         }
 
+        public static bool PingServer() {
+            try {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(baseUrl + "ping/");
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+
+                return response.StatusCode == HttpStatusCode.OK;
+            }
+            catch {
+                return false;
+            }
+        }
+
         public static string GetRoom(string roomId) {
             string endPoint = baseUrl + "room/";
 

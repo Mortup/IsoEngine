@@ -14,18 +14,18 @@ namespace com.mortup.iso.serialization {
         private const string basePath = "Saves";    // TODO: Path Manager should take care of this.
         private const string fileExtension = ".bin";
 
-        LevelData ILevelSerializer.LoadLevel(string levelName) {
+        ILevelData ILevelSerializer.LoadLevel(string levelName) {
             Debug.LogFormat("Loading level {0}...", levelName);
 
             if (forceCreateNewLevelOnLoad) {
-                LevelData levelData = new LevelData(10, 10, levelName);
+                ILevelData levelData = new LevelData(10, 10, levelName);
                 levelData.id = 42;
                 return levelData;
             }
 
             if (FileExists(levelName) == false) {
                 Debug.LogError(string.Format("Level {0} could not be found. Creating a default one.", levelName));
-                LevelData levelData = new LevelData(10, 10);
+                ILevelData levelData = new LevelData(10, 10);
                 levelData.name = levelName;
 
                 return levelData;
@@ -38,7 +38,7 @@ namespace com.mortup.iso.serialization {
             return serializableData.ToLevelData();
         }
 
-        void ILevelSerializer.SaveLevel(LevelData levelData) {
+        void ILevelSerializer.SaveLevel(ILevelData levelData) {
             Debug.Log("Saving level " + levelData.name + "...");
 
             SerializableLevelData serializableData = new SerializableLevelData(levelData);

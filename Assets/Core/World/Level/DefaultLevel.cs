@@ -6,9 +6,7 @@ using com.mortup.iso.world;
 
 namespace com.mortup.iso {
 
-    public class Level : MonoBehaviour {
-        public Transformer transformer { get; private set; }
-        public LevelData data { get; private set; }
+    public class DefaultLevel : Level {        
 
         [Header("Debug Settings")]
         [SerializeField] private string levelName;
@@ -17,7 +15,7 @@ namespace com.mortup.iso {
         private ILevelSerializer levelSerializer;
 
         private void Awake() {
-            transformer = new Transformer(this);
+            transformer = new Transformer(transform);
 
             levelSerializer = GetComponent<ILevelSerializer>();
             if (levelSerializer == null) {
@@ -33,7 +31,7 @@ namespace com.mortup.iso {
             }
         }
 
-        public void LoadLevel() {
+        public override void LoadLevel() {
             data = levelSerializer.LoadLevel(levelName);
 
             foreach (IsoMonoBehaviour isoMonoBehaviour in GetComponents<IsoMonoBehaviour>()) {

@@ -17,7 +17,7 @@ namespace com.mortup.iso.serialization {
         public int[] itemTiles;
         public int[] itemOrientations;
 
-        public SerializableLevelData(LevelData levelData) {
+        public SerializableLevelData(ILevelData levelData) {
             id = levelData.id;
             name = levelData.name;
             owner = levelData.owner;
@@ -48,8 +48,8 @@ namespace com.mortup.iso.serialization {
             
         }
 
-        public LevelData ToLevelData() {
-            LevelData levelData = new LevelData(width, height);
+        public ILevelData ToLevelData() {
+            ILevelData levelData = new LevelData(width, height);
             levelData.name = name;
             levelData.owner = owner;
             levelData.id = id;

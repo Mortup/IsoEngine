@@ -819,7 +819,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d67958ed84cc781458875c3b9e0f4cc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: {fileID: 1783360209}
+  level: {fileID: 0}
   cursorPrefab: {fileID: 6499704212573988391, guid: a1a59a942d396004fb4424e64d0f9cd1,
     type: 3}
 --- !u!114 &491537283
@@ -834,7 +834,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68bd3227eb0b2e04eae88bbde46743e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: {fileID: 1783360209}
+  level: {fileID: 0}
   cursorPrefab: {fileID: 6499704212573988391, guid: a1a59a942d396004fb4424e64d0f9cd1,
     type: 3}
 --- !u!114 &491537284
@@ -849,7 +849,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0b54617b647b634ba5a388571bd54e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: {fileID: 1783360209}
+  level: {fileID: 0}
 --- !u!114 &491537285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -862,7 +862,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5f597fce0c841458c4658817ee192f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: {fileID: 1783360209}
+  level: {fileID: 0}
   cursorPrefab: {fileID: 6499704212573988391, guid: a1a59a942d396004fb4424e64d0f9cd1,
     type: 3}
 --- !u!1 &527125393
@@ -3219,7 +3219,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1713078136
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3251,7 +3251,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dec23f4b221ccab4b9a69acc7702b91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: {fileID: 1783360209}
+  level: {fileID: 0}
   showNickname: 1
   showMouseScreen: 0
   showMouseWorld: 0
