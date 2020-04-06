@@ -72,7 +72,7 @@ namespace com.mortup.iso {
         }
 
         public override GameObject GetItemGameObject(Vector2Int coords) {
-            if (itemObserver = null) {
+            if (itemObserver == null) {
                 Debug.LogWarning("Item GameObjects cannot be retrieved without a ItemObserver.");
                 return null;
             }

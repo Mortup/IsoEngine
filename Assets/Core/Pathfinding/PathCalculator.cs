@@ -49,7 +49,7 @@ namespace com.mortup.iso.pathfinding {
                 closedSet.Add(current);
                 openSet.Remove(current);
 
-                foreach (Vector2Int neighbor in GetNeighbors(level, current, true)) {
+                foreach (Vector2Int neighbor in GetNeighbors(level, current, false)) {
                     float tentativeGScore = gScores[current] + DScore(current, neighbor);
                     if (tentativeGScore < gScores[neighbor]) {
                         cameFrom[neighbor] = current;
@@ -98,7 +98,7 @@ namespace com.mortup.iso.pathfinding {
             }
 
             foreach (Vector2Int neighbor in neighbors) {
-                if (IsWalkable(level, neighbor)) {
+                if (IsWalkable(level, neighbor, center)) {
                     result.Add(neighbor);
                 }
             }
@@ -106,14 +106,70 @@ namespace com.mortup.iso.pathfinding {
             return result;
         }
 
-        private static bool IsWalkable(Level level, Vector2Int coords) {
-            bool insideBoundaries = level.data.IsFloorInBounds(coords);
-
+        private static bool IsWalkable(Level level, Vector2Int destination) {
+            // Is destination inside boundaries?
+            bool insideBoundaries = level.data.IsFloorInBounds(destination);
             if (insideBoundaries == false)
                 return false;
 
-            bool notEmpty = level.data.GetFloor(coords.x, coords.y) != (int)FloorIndex.Empty;
-            return notEmpty;
+            // Is the floor walkable?
+            bool isFloorWalkable = true;
+            GameObject floorGO = level.GetFloorGameObject(destination);
+            WalkableState floorWalkableState = floorGO.GetComponent<WalkableState>();
+            if (floorWalkableState == null) {
+                isFloorWalkable = level.data.GetFloor(destination.x, destination.y) != (int)FloorIndex.Empty;
+            }
+            else {
+                isFloorWalkable = floorWalkableState.isWalkable;
+            }
+
+            if (isFloorWalkable == false)
+                return false;
+
+            // Is the item walkable?
+            bool isItemWalkable = true;
+            GameObject itemGO = level.GetItemGameObject(destination);
+            WalkableState itemWalkableState = itemGO.GetComponent<WalkableState>();
+            if (itemWalkableState == null) {
+                isItemWalkable = level.data.GetItem(destination).x == (int)ItemIndex.Empty;
+            }
+            else {
+                isItemWalkable = itemWalkableState.isWalkable;
+            }
+
+            return isItemWalkable;
+        }
+
+        private static bool IsWalkable(Level level, Vector2Int destination, Vector2Int origin) {
+            bool isTileWalkable = IsWalkable(level, destination);
+
+            if (isTileWalkable == false)
+                return false;
+
+            Vector3Int wallBetweenTiles = GetWallBetweenTiles(origin, destination);
+            GameObject wallGo = level.GetWallGameObject(wallBetweenTiles);
+            WalkableState wallWalkableState = wallGo.GetComponent<WalkableState>();
+            if (wallWalkableState == null) {
+                Debug.LogFormat("Wall {0},{1},{2} is {3}", wallBetweenTiles.x, wallBetweenTiles.y, wallBetweenTiles.z, level.data.GetWall(wallBetweenTiles) == (int)WallIndex.Empty);
+                return level.data.GetWall(wallBetweenTiles) == (int)WallIndex.Empty;
+            }
+            else {
+                return wallWalkableState.isWalkable;
+            }
+        }
+
+        private static Vector3Int GetWallBetweenTiles(Vector2Int origin, Vector2Int destination) {
+            if (Vector2Int.Distance(origin, destination) > 1f) {
+                Debug.LogError("Wall can only be found between adjacent tiles.");
+                return Vector3Int.zero;
+            }
+
+            if (Mathf.Abs(origin.x - destination.x) == 1) {
+                return new Vector3Int(Mathf.Max(origin.x, destination.x), origin.y + 1, 0);
+            }
+            else {
+                return new Vector3Int(origin.x, Mathf.Max(origin.y, destination.y), 1);
+            }
         }
 
     }
