@@ -8,11 +8,11 @@ namespace com.mortup.iso.observers {
     public class FloorObserver : IsoMonoBehaviour {
 
         private Level level;
-        private PrefabContainer[,] tilePrefabs;
+        private PrefabContainer[,] floorPrefabs;
 
         public override void OnLevelLoad(Level level) {
             this.level = level;
-            tilePrefabs = new PrefabContainer[level.data.width, level.data.height];
+            floorPrefabs = new PrefabContainer[level.data.width, level.data.height];
             UpdateAllTiles();
             level.data.RegisterFloorObserver(this);
         }
@@ -34,7 +34,15 @@ namespace com.mortup.iso.observers {
 
             tilePrefab.orientableSprite.Init(level);
 
-            tilePrefabs[x, y] = tilePrefab;
+            floorPrefabs[x, y] = tilePrefab;
+        }
+
+        public GameObject GetFloorGameObject(Vector2Int coords) {
+            return GetFloorGameObject(coords.x, coords.y);
+        }
+
+        public GameObject GetFloorGameObject(int x, int y) {
+            return floorPrefabs[x, y].gameObject;
         }
         
         private void UpdateAllTiles() {
@@ -48,8 +56,8 @@ namespace com.mortup.iso.observers {
         }
 
         private void DestroyTile(int x, int y) {
-            if (tilePrefabs[x,y] != null) {
-                tilePrefabs[x, y].Destroy();
+            if (floorPrefabs[x,y] != null) {
+                floorPrefabs[x, y].Destroy();
             }
         }
 

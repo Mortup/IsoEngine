@@ -30,6 +30,21 @@ namespace com.mortup.iso {
 
         public override void LoadLevel() {
         }
+
+        public override GameObject GetFloorGameObject(Vector2Int coords) {
+            Debug.LogWarning("GameObjects cannot be retrieved without adding a parent level.");
+            return null;
+        }
+
+        public override GameObject GetWallGameObject(Vector3Int coords) {
+            Debug.LogWarning("GameObjects cannot be retrieved without adding a parent level.");
+            return null;
+        }
+
+        public override GameObject GetItemGameObject(Vector2Int coords) {
+            Debug.LogWarning("GameObjects cannot be retrieved without adding a parent level.");
+            return null;
+        }
     }
 
 }

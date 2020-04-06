@@ -39,6 +39,14 @@ namespace com.mortup.iso.observers {
             itemPrefabs[x, y] = itemPrefab;
         }
 
+        public GameObject GetItemGameObject(Vector2Int coords) {
+            return GetItemGameObject(coords.x, coords.y);
+        }
+
+        public GameObject GetItemGameObject(int x, int y) {
+            return itemPrefabs[x, y].gameObject;
+        }
+
         private void UpdateAllItems() {
 
             for (int x = 0; x < level.data.width; x++) {

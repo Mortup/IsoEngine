@@ -38,6 +38,14 @@ namespace com.mortup.iso.observers {
             wallPrefabs[x, y, z] = wallRes;
         }
 
+        public GameObject GetWallGameObject(Vector3Int coords) {
+            return GetWallGameObject(coords.x, coords.y, coords.z);
+        }
+
+        public GameObject GetWallGameObject(int x, int y, int z) {
+            return wallPrefabs[x, y, z].gameObject;
+        }
+
         private void UpdateAllTiles() {
 
             for (int x = 0; x <= level.data.width; x++) {
