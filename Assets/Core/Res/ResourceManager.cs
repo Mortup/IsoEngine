@@ -43,7 +43,7 @@ namespace com.mortup.iso.resources {
             string loadPath = string.Format(floorPath, index);
 
             if (Resources.Load<Sprite>(loadPath) != null) {
-                PrefabContainer prefabContainer = new PrefabContainer(Resources.Load<GameObject>(string.Format(prefabPath, "Tile")));
+                PrefabContainer prefabContainer = new PrefabContainer(GetBaseFloorPrefab());
                 prefabContainer.spriteRenderer.sprite = GetFloorSprite(index);
                 SingleOrientableSprite sos = (SingleOrientableSprite)prefabContainer.orientableSprite;
                 sos.sprite = GetFloorSprite(index);
@@ -53,7 +53,7 @@ namespace com.mortup.iso.resources {
                 return new PrefabContainer(Resources.Load<GameObject>(loadPath));
             }
 
-            Debug.LogErrorFormat("Couldn't find resource for tile {0}", index);
+            Debug.LogErrorFormat("Couldn't find resource for tile {0} with path {1}", index, loadPath);
             return null;
         }
 
@@ -65,7 +65,7 @@ namespace com.mortup.iso.resources {
                 return new PrefabContainer(Resources.Load<GameObject>(currentWallSpritePath));
             }
             if (Resources.Load<Sprite>(currentWallSpritePath) != null) {
-                PrefabContainer prefabContainer = new PrefabContainer(Resources.Load<GameObject>(string.Format(prefabPath, "Wall")));
+                PrefabContainer prefabContainer = new PrefabContainer(GetBaseWallPrefab());
                 prefabContainer.spriteRenderer.sprite = GetWallSprite(index, side);
 
                 WallOrientableSprite wallOrientableSprite = prefabContainer.gameObject.GetComponent<WallOrientableSprite>();
@@ -88,7 +88,7 @@ namespace com.mortup.iso.resources {
                 return new PrefabContainer(Resources.Load<GameObject>(currentItemSpritePath));
             }
             if (Resources.Load<Sprite>(currentItemSpritePath) != null) {
-                PrefabContainer prefabContainer = new PrefabContainer(Resources.Load<GameObject>(string.Format(prefabPath, "Item")));
+                PrefabContainer prefabContainer = new PrefabContainer(GetBaseItemPrefab());
                 prefabContainer.spriteRenderer.sprite = GetItemSprite(index, side);
 
                 RegularOrientableSprite itemOrientableSprite = prefabContainer.gameObject.GetComponent<RegularOrientableSprite>();
@@ -118,7 +118,7 @@ namespace com.mortup.iso.resources {
                 return go.GetComponent<SpriteRenderer>().sprite;
             }
 
-            Debug.LogErrorFormat("Couldn't find sprite for tile {0}", index);
+            Debug.LogErrorFormat("Couldn't find sprite for tile {0} with path {1}", index, loadPath);
             return null;
         }
 
@@ -135,7 +135,7 @@ namespace com.mortup.iso.resources {
                 return go.GetComponent<SpriteRenderer>().sprite;
             }
 
-            Debug.LogErrorFormat("Couldn't find sprite for wall {0}", index);
+            Debug.LogErrorFormat("Couldn't find sprite for wall {0} with path {1}", index, loadPath);
             return null;
         }
 
@@ -152,8 +152,41 @@ namespace com.mortup.iso.resources {
                 return go.GetComponent<SpriteRenderer>().sprite;
             }
 
-            Debug.LogErrorFormat("Couldn't find sprite for item {0}", index);
+            Debug.LogErrorFormat("Couldn't find sprite for item {0} with path {1}", index, loadPath);
             return null;
+        }
+
+        public static GameObject GetBaseFloorPrefab() {
+            string path = string.Format(prefabPath, "Tile");
+            GameObject baseFloor = Resources.Load<GameObject>(path);
+            
+            if (baseFloor == null) {
+                Debug.LogErrorFormat("Couldn't find a base prefab for floor tiles at {0}.", path);
+            }
+
+            return baseFloor;
+        }
+
+        public static GameObject GetBaseWallPrefab() {
+            string path = string.Format(prefabPath, "Wall");
+            GameObject baseWall = Resources.Load<GameObject>(path);
+
+            if (baseWall == null) {
+                Debug.LogErrorFormat("Couldn't find a base prefab for wall tiles at {0}.", path);
+            }
+
+            return baseWall;
+        }
+
+        public static GameObject GetBaseItemPrefab() {
+            string path = string.Format(prefabPath, "Item");
+            GameObject baseItem = Resources.Load<GameObject>(path);
+
+            if (baseItem == null) {
+                Debug.LogErrorFormat("Couldn't find a base prefab for item tiles at {0}.", path);
+            }
+
+            return baseItem;
         }
 
     }

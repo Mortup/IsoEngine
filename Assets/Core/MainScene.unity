@@ -2421,7 +2421,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abd12767a61fc4343b6e88cb82dec187, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelName: IsoTiledTest
+  levelName: LevelB
   loadOnStart: 1
 --- !u!4 &1783360210
 Transform:
@@ -2936,7 +2936,7 @@ PrefabInstance:
     - target: {fileID: 8415934962457815467, guid: 4a5f6529cb759794daf35d53af85e38b,
         type: 3}
       propertyPath: levelName
-      value: IsoTiledTest
+      value: LevelB
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
