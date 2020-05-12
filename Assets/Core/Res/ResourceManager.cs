@@ -10,32 +10,37 @@ namespace com.mortup.iso.resources {
 
         private static string prefabPath {
             get {
-                return Path.Combine(Settings.basePath, "DefaultPrefabs/{0}");
+                return Path.Combine(Settings.basePath, "DefaultPrefabs", "{0}");
             }
         }
         private static string floorPath {
             get {
-                return Path.Combine(Settings.basePath, "Sprites/Floor/{0}");
+                return Path.Combine(Settings.basePath, "Sprites", "Floor", "{0}");
             }
         }
         private static string wallPrefabPath {
             get {
-                return Path.Combine(Settings.basePath, "Sprites/Wall/{0}/Wall_00{0}");
+                return Path.Combine(Settings.basePath, "Sprites", "Wall", "{0}", "Wall_00{0}");
             }
         }
         private static string wallSpritePath {
             get {
-                return Path.Combine(Settings.basePath, "Sprites/Wall/{0}/Wall_00{0}_{1}");
+                return Path.Combine(Settings.basePath, "Sprites", "Wall", "{0}", "Wall_00{0}_{1}");
+            }
+        }
+        private static string itemFolderPath {
+            get {
+                return Path.Combine(Settings.basePath, "Sprites", "Item", "{0}");
             }
         }
         private static string itemPrefabPath {
             get {
-                return Path.Combine(Settings.basePath, "Sprites/Item/{0}/Item_00{0}");
+                return Path.Combine(itemFolderPath, "Item_00{0}");
             }
         }
         private static string itemSpritePath {
             get {
-                return Path.Combine(Settings.basePath, "Sprites/Item/{0}/Item_00{0}_{1}");
+                return Path.Combine(itemFolderPath, "Item_00{0}_{1}");
             }
         }
 
@@ -92,12 +97,25 @@ namespace com.mortup.iso.resources {
                 prefabContainer.spriteRenderer.sprite = GetItemSprite(index, side);
 
                 RegularOrientableSprite itemOrientableSprite = prefabContainer.gameObject.GetComponent<RegularOrientableSprite>();
-                itemOrientableSprite.northSprite = GetItemSprite(index, 0);
-                itemOrientableSprite.westSprite = GetItemSprite(index, 1);
-                itemOrientableSprite.southSprite = GetItemSprite(index, 2);
-                itemOrientableSprite.eastSprite = GetItemSprite(index, 3);
                 itemOrientableSprite.localOrientation = (Transformer.Orientation)side;
-                
+                int spriteCount = GetItemSpriteCount(index);
+                itemOrientableSprite.northSprite = GetItemSprite(index, 0);
+
+                if (spriteCount == 4) {
+                    itemOrientableSprite.westSprite = GetItemSprite(index, 1);
+                    itemOrientableSprite.southSprite = GetItemSprite(index, 2);
+                    itemOrientableSprite.eastSprite = GetItemSprite(index, 3);
+                }
+                else if (spriteCount == 2) {
+                    itemOrientableSprite.westSprite = GetItemSprite(index, 1);
+                    itemOrientableSprite.southSprite = itemOrientableSprite.northSprite;
+                    itemOrientableSprite.eastSprite = itemOrientableSprite.westSprite;
+                }
+                else {
+                    itemOrientableSprite.westSprite = itemOrientableSprite.northSprite;
+                    itemOrientableSprite.southSprite = itemOrientableSprite.northSprite;
+                    itemOrientableSprite.eastSprite = itemOrientableSprite.northSprite;
+                }
                 return prefabContainer;
             }
 
@@ -154,6 +172,11 @@ namespace com.mortup.iso.resources {
 
             Debug.LogErrorFormat("Couldn't find sprite for item {0} with path {1}", index, loadPath);
             return null;
+        }
+
+        public static int GetItemSpriteCount(int index) {
+            string itemPath = string.Format(itemFolderPath, index);            
+            return Resources.LoadAll<Sprite>(itemPath).Length;
         }
 
         public static GameObject GetBaseFloorPrefab() {
