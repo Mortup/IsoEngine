@@ -34,6 +34,12 @@ namespace com.mortup.iso.world {
 
         bool IsItemInBounds(Vector2Int coords);
 
+        /// <summary>
+        /// Returns the item index on x and the item orientation on y.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
         Vector2Int GetItem(int x, int y);
 
         Vector2Int GetItem(Vector2Int coords);

@@ -89,8 +89,8 @@ namespace com.mortup.iso.resources {
             string currentItemPrefabPath = string.Format(itemPrefabPath, index);
             string currentItemSpritePath = string.Format(itemSpritePath, index, side);
 
-            if (Resources.Load<GameObject>(itemPrefabPath) != null) {
-                return new PrefabContainer(Resources.Load<GameObject>(currentItemSpritePath));
+            if (Resources.Load<GameObject>(currentItemPrefabPath) != null) {
+                return new PrefabContainer(Resources.Load<GameObject>(currentItemPrefabPath));
             }
             if (Resources.Load<Sprite>(currentItemSpritePath) != null) {
                 PrefabContainer prefabContainer = new PrefabContainer(GetBaseItemPrefab());
@@ -119,7 +119,7 @@ namespace com.mortup.iso.resources {
                 return prefabContainer;
             }
 
-            Debug.LogErrorFormat("Couldn't find resource for item {0} with path {1}", index, currentItemSpritePath);
+            Debug.LogErrorFormat("Couldn't find resource for item {0} with path {1} or {2}", index, currentItemSpritePath, currentItemPrefabPath);
             return null;
         }
 
