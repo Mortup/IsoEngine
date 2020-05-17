@@ -17,4 +17,30 @@
         WHITE_PAWN = 12
     }
 
+    static class ChessIndexMethods {
+        public static bool IsEmpty(this ChessIndex ci) {
+            return ci == ChessIndex.EMPTY;
+        }
+
+        public static bool IsWhite(this ChessIndex ci) {
+            return (int)ci > 6;
+        }
+
+        public static bool IsBlack(this ChessIndex ci) {
+            return (int)ci < 7 && (int)ci != 0;
+        }
+
+        public static bool IsSameColor(this ChessIndex ci1, ChessIndex ci2) {
+            if (ci1.IsBlack() && ci2.IsBlack())
+                return true;
+
+            if (ci1.IsWhite() && ci2.IsWhite())
+                return true;
+
+            if (ci1.IsEmpty() && ci2.IsEmpty())
+                return true;
+
+            return false;
+        }
+    }
 }

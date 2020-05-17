@@ -43,6 +43,13 @@ namespace com.mortup.iso.demo.chess {
             data.SetItem(5, 6, (int)ChessIndex.WHITE_PAWN, 0);
             data.SetItem(6, 6, (int)ChessIndex.WHITE_PAWN, 0);
             data.SetItem(7, 6, (int)ChessIndex.WHITE_PAWN, 0);
+
+            for (int x = 0; x < chessBoardSize; x++) {
+                for (int y = 0; y < chessBoardSize; y++) {
+                    data.SetFloor(x, y, (x + y) % 2 == 0 ? 0 : 1);
+                }
+            }
+
             return data;
         }
 
