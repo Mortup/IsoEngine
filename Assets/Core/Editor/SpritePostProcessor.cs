@@ -25,11 +25,14 @@ public class SpritePostProcessor : AssetPostprocessor
         if (assetPath.Contains("Floor") || assetPath.Contains("Tile")) {
             tis.spritePivot = tilePivot;
         }
-        if (assetPath.Contains("Wall")) {
+        else if (assetPath.Contains("Wall")) {
             tis.spritePivot = wallPivot;
         }
-        if (assetPath.Contains("Item")) {
+        else if (assetPath.Contains("Item")) {
             tis.spritePivot = itemPivot;
+        }
+        else {
+            return;
         }
 
         textureImporter.SetTextureSettings(tis);

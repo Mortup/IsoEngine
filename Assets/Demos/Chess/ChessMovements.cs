@@ -37,9 +37,12 @@ namespace com.mortup.iso.demo.chess {
             Vector2Int destination = pawnType.IsWhite() ? new Vector2Int(0, -1) : new Vector2Int(0, 1);
             Vector2Int extraDestination = pawnType.IsWhite() ? new Vector2Int(0, -2) : new Vector2Int(0, 2);
 
+            destination += pawnPosition;
+            extraDestination += pawnPosition;
+
             if (level.data.IsItemInBounds(destination)) {
                 int destinationType = level.data.GetItem(destination).x;
-                if (CanMove((int)pawnType, destinationType)) {
+                if ((ChessIndex)destinationType == ChessIndex.EMPTY) {
                     result.Add(destination);
 
                     if (level.data.IsItemInBounds(extraDestination) && (pawnType.IsWhite() && pawnPosition.y == 6) || (pawnType.IsBlack() && pawnPosition.y == 1)) {
@@ -48,6 +51,24 @@ namespace com.mortup.iso.demo.chess {
                             result.Add(extraDestination);
                         }
                     }
+                }
+            }
+
+            Vector2Int attackOne = pawnType.IsWhite() ? new Vector2Int(1, -1) : new Vector2Int(1, 1);
+            Vector2Int attackTwo = pawnType.IsWhite() ? new Vector2Int(-1, -1) : new Vector2Int(-1, 1);
+            attackOne += pawnPosition;
+            attackTwo += pawnPosition;
+            if (level.data.IsItemInBounds(attackOne)) {
+                int destinationType = level.data.GetItem(attackOne).x;
+                if (CanEat((int)pawnType, destinationType)) {
+                    result.Add(attackOne);
+                }
+            }
+
+            if (level.data.IsItemInBounds(attackTwo)) {
+                int destinationType = level.data.GetItem(attackTwo).x;
+                if (CanEat((int)pawnType, destinationType)) {
+                    result.Add(attackTwo);
                 }
             }
 
@@ -63,7 +84,7 @@ namespace com.mortup.iso.demo.chess {
         }
 
         private static List<Vector2Int> GetKnightMovements(Level level, Vector2Int knightPosition) {
-            List<Vector2> localTargets = new List<Vector2>();
+            List<Vector2Int> localTargets = new List<Vector2Int>();
             localTargets.Add(new Vector2Int(2, 1));
             localTargets.Add(new Vector2Int(2, -1));
             localTargets.Add(new Vector2Int(-2, 1));
@@ -75,7 +96,7 @@ namespace com.mortup.iso.demo.chess {
 
             int knightType = level.data.GetItem(knightPosition).x;
             List<Vector2Int> result = new List<Vector2Int>();
-            foreach (Vector2Int local in result) {
+            foreach (Vector2Int local in localTargets) {
                 Vector2Int world = local + knightPosition;
 
                 if (level.data.IsItemInBounds(world)) {
@@ -151,6 +172,9 @@ namespace com.mortup.iso.demo.chess {
                     break;
 
                 result.Add(target);
+
+                if (ChessIndex.EMPTY != (ChessIndex)destinationType)
+                    break;
             }
 
             return result;
@@ -170,6 +194,19 @@ namespace com.mortup.iso.demo.chess {
             return false;
         }
 
+        private static bool CanEat(int pieceType, int destinationType) {
+            return CanEat((ChessIndex)pieceType, (ChessIndex)destinationType);
+        }
+
+        private static bool CanEat(ChessIndex pieceType, ChessIndex destinationType) {
+            if (pieceType.IsWhite() && destinationType.IsBlack())
+                return true;
+
+            if (pieceType.IsBlack() && destinationType.IsWhite())
+                return true;
+
+            return false;
+        }
     }
 
 }
