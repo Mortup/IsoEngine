@@ -8,7 +8,7 @@ namespace com.mortup.iso.pathfinding {
 
     public class PathCalculator {
 
-        public static List<Vector2Int> FindPath(Level level, Vector2Int start, Vector2Int goal) {
+        public static List<Vector2Int> FindPath(Level level, Vector2Int start, Vector2Int goal, bool includeDiagonals=false) {
             // Don't calculate unreachable paths.
             if (IsWalkable(level, start) == false || IsWalkable(level, goal) == false) {
                 return new List<Vector2Int>();
@@ -49,7 +49,7 @@ namespace com.mortup.iso.pathfinding {
                 closedSet.Add(current);
                 openSet.Remove(current);
 
-                foreach (Vector2Int neighbor in GetNeighbors(level, current, false)) {
+                foreach (Vector2Int neighbor in GetNeighbors(level, current, includeDiagonals)) {
                     float tentativeGScore = gScores[current] + DScore(current, neighbor);
                     if (tentativeGScore < gScores[neighbor]) {
                         cameFrom[neighbor] = current;
@@ -148,6 +148,10 @@ namespace com.mortup.iso.pathfinding {
 
             Vector3Int wallBetweenTiles = GetWallBetweenTiles(origin, destination);
             GameObject wallGo = level.GetWallGameObject(wallBetweenTiles);
+            if (wallGo == null) {
+                return level.data.GetWall(wallBetweenTiles) == (int)WallIndex.Empty;
+            }
+
             WalkableState wallWalkableState = wallGo.GetComponent<WalkableState>();
             if (wallWalkableState == null) {
                 Debug.LogFormat("Wall {0},{1},{2} is {3}", wallBetweenTiles.x, wallBetweenTiles.y, wallBetweenTiles.z, level.data.GetWall(wallBetweenTiles) == (int)WallIndex.Empty);
@@ -160,8 +164,8 @@ namespace com.mortup.iso.pathfinding {
 
         private static Vector3Int GetWallBetweenTiles(Vector2Int origin, Vector2Int destination) {
             if (Vector2Int.Distance(origin, destination) > 1f) {
-                Debug.LogError("Wall can only be found between adjacent tiles.");
-                return Vector3Int.zero;
+                //Debug.LogError("Wall can only be found between adjacent tiles.");
+                return Vector3Int.one * -1;
             }
 
             if (Mathf.Abs(origin.x - destination.x) == 1) {
